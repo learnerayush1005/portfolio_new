@@ -1,0 +1,840 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Ayush Kumar | Data Engineer</title>
+    <meta name="description"
+        content="Portfolio of Ayush Kumar, a Data Engineer specializing in Snowflake, PySpark, and Cloud Architectures.">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        navy: { 900: '#020617', 800: '#0f172a' },
+                        cyan: { 400: '#22d3ee', 500: '#06b6d4' },
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* --- Core Variables --- */
+        :root {
+            --accent: #22d3ee;
+            --accent-glow: rgba(34, 211, 238, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-bg: rgba(15, 23, 42, 0.6);
+        }
+
+        body {
+            background-color: #020617;
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+
+        /* --- Background Grid & Glow --- */
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            z-index: -20;
+            background-image:
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+        }
+
+        .spotlight {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 80vw;
+            height: 80vw;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.15), transparent 70%);
+            transform: translate(-50%, -50%);
+            z-index: -19;
+            pointer-events: none;
+            animation: pulseGlow 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            0% {
+                opacity: 0.5;
+                transform: translate(-50%, -50%) scale(0.8);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+        }
+
+        /* --- Typography Utilities --- */
+        .text-glow {
+            text-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .mono-tag {
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: -0.02em;
+        }
+
+        /* --- Navigation Pill --- */
+        .nav-pill {
+            background: rgba(2, 6, 23, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .nav-pill.scrolled {
+            padding: 0.5rem 1.5rem;
+            border-color: var(--accent);
+        }
+
+        /* --- Glass Cards with Tilt --- */
+        .glass-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            transition: transform 0.1s, box-shadow 0.3s, border-color 0.3s;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(34, 211, 238, 0.3);
+            box-shadow: 0 0 30px rgba(34, 211, 238, 0.1);
+        }
+
+        /* --- Typewriter Effect Cursor --- */
+        .typewriter::after {
+            content: '|';
+            animation: blink 1s step-start infinite;
+            color: var(--accent);
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* --- Skill Circles --- */
+        .skill-circle circle {
+            transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* --- Scroll Animations --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stagger-delay-1 {
+            transition-delay: 100ms;
+        }
+
+        .stagger-delay-2 {
+            transition-delay: 200ms;
+        }
+
+        .stagger-delay-3 {
+            transition-delay: 300ms;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #020617;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
+        }
+    </style>
+</head>
+
+<body class="antialiased selection:bg-cyan-500 selection:text-white">
+
+    <div class="bg-grid"></div>
+    <div class="spotlight"></div>
+    <canvas id="particles" class="fixed inset-0 z-[-15] opacity-40 pointer-events-none"></canvas>
+
+    <header class="fixed top-6 left-0 right-0 z-50 flex justify-center px-4">
+        <nav id="navbar" class="nav-pill rounded-full px-6 py-3 flex items-center gap-8">
+            <a href="#" class="font-bold text-xl tracking-tight text-white hover:text-cyan-400 transition-colors">
+                AK<span class="text-cyan-400">.</span>
+            </a>
+
+            <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-400">
+                <a href="#about" class="hover:text-white transition-colors">About</a>
+                <a href="#stack" class="hover:text-white transition-colors">Stack</a>
+                <a href="#projects" class="hover:text-white transition-colors">Work</a>
+                <a href="#feedback" class="hover:text-white transition-colors">Insights</a>
+                <a href="#timeline" class="hover:text-white transition-colors">Journey</a>
+            </div>
+
+            <a href="mailto:learner.ayush10@gmail.com"
+                class="hidden md:block px-4 py-1.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 text-xs font-bold uppercase tracking-wider hover:bg-cyan-500 hover:text-white transition-all">
+                Hire Me
+            </a>
+
+            <button class="md:hidden text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </nav>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-6 pt-32 pb-20">
+
+        <section id="about" class="min-h-[85vh] flex flex-col md:flex-row items-center justify-between gap-12">
+            <div class="flex-1 space-y-6 reveal">
+                <div
+                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-900/30 border border-cyan-500/30 text-cyan-400 text-xs font-mono">
+                    <span class="relative flex h-2 w-2">
+                        <span
+                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+                    </span>
+                    Open to Work
+                </div>
+
+                <h1 class="text-5xl md:text-7xl font-extrabold text-white tracking-tight leading-tight">
+                    Ayush <span
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600">Kumar</span>
+                </h1>
+
+                <div class="text-xl md:text-2xl text-slate-400 font-light h-8">
+                    I build <span id="typewriter" class="text-white font-mono typewriter"></span>
+                </div>
+
+                <p class="text-slate-400 max-w-lg leading-relaxed">
+                    Specialized in high-volume ETL, Cloud Data Warehousing, and resilient orchestration. Transforming
+                    raw chaos into query-ready insights using <span class="text-cyan-400 font-mono">Snowflake</span> &
+                    <span class="text-cyan-400 font-mono">PySpark</span>.
+                </p>
+
+                <div class="flex flex-wrap gap-4 pt-4">
+                    <a href="#projects"
+                        class="px-6 py-3 bg-white text-slate-900 rounded-lg font-bold hover:bg-cyan-50 hover:scale-105 transition-transform">
+                        View Projects
+                    </a>
+                    <a href="My Resume (1).pdf" download
+                        class="px-6 py-3 rounded-lg border border-slate-700 text-slate-300 hover:border-cyan-500 hover:text-cyan-400 transition-colors flex items-center gap-2">
+                        <span>Download CV</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                        </svg>
+                    </a>
+                </div>
+
+                <div class="pt-8 flex items-center gap-6 text-sm text-slate-500 font-mono">
+                    <div class="flex items-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                            </path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                        Bokaro Steel City, IN
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-2xl font-bold text-white">2.5+</span> YOE
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex-1 relative w-full max-w-md reveal stagger-delay-2 hidden md:block">
+                <div class="grid grid-cols-2 gap-4" id="tilt-grid">
+
+                    <div class="glass-card p-6 rounded-2xl tilt-card">
+                        <div
+                            class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center mb-4 text-blue-400">
+                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                            </svg>
+                        </div>
+                        <h3 class="font-bold text-white mb-1">Snowflake</h3>
+                        <p class="text-xs text-slate-400">Performance tuning & Schema Design</p>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl tilt-card mt-8">
+                        <div
+                            class="w-10 h-10 bg-yellow-500/20 rounded-lg flex items-center justify-center mb-4 text-yellow-400">
+                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                        </div>
+                        <h3 class="font-bold text-white mb-1">PySpark</h3>
+                        <p class="text-xs text-slate-400">Distributed Processing</p>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl tilt-card -mt-8">
+                        <div
+                            class="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center mb-4 text-purple-400">
+                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                            </svg>
+                        </div>
+                        <h3 class="font-bold text-white mb-1">Qlik Replicate</h3>
+                        <p class="text-xs text-slate-400">Real-time CDC</p>
+                    </div>
+
+                    <div class="glass-card p-6 rounded-2xl tilt-card">
+                        <div
+                            class="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center mb-4 text-green-400">
+                            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <h3 class="font-bold text-white mb-1">Control-M</h3>
+                        <p class="text-xs text-slate-400">Orchestration</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="stack" class="py-24">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl font-bold text-white mb-4">Technical <span class="text-cyan-400">Arsenal</span></h2>
+                <p class="text-slate-400 max-w-2xl mx-auto">My toolbox for solving complex data problems. Percentages
+                    represent confidence level.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 reveal stagger-delay-1">
+
+                <div
+                    class="glass-card p-5 rounded-xl flex items-center gap-4 hover:-translate-y-1 transition-transform duration-300">
+                    <div class="relative w-16 h-16 skill-circle" data-percent="92">
+                        <svg class="w-full h-full transform -rotate-90">
+                            <circle cx="32" cy="32" r="28" stroke="rgba(255,255,255,0.1)" stroke-width="6" fill="none">
+                            </circle>
+                            <circle cx="32" cy="32" r="28" stroke="#06b6d4" stroke-width="6" fill="none"
+                                stroke-dasharray="175" stroke-dashoffset="175" class="progress"></circle>
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center font-bold text-sm text-white">92%
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-lg">Data Warehousing</h4>
+                        <p class="text-xs text-slate-400 mt-1">Snowflake, Star Schema</p>
+                    </div>
+                </div>
+
+                <div
+                    class="glass-card p-5 rounded-xl flex items-center gap-4 hover:-translate-y-1 transition-transform duration-300">
+                    <div class="relative w-16 h-16 skill-circle" data-percent="86">
+                        <svg class="w-full h-full transform -rotate-90">
+                            <circle cx="32" cy="32" r="28" stroke="rgba(255,255,255,0.1)" stroke-width="6" fill="none">
+                            </circle>
+                            <circle cx="32" cy="32" r="28" stroke="#22d3ee" stroke-width="6" fill="none"
+                                stroke-dasharray="175" stroke-dashoffset="175" class="progress"></circle>
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center font-bold text-sm text-white">86%
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-lg">ETL & Orchestration</h4>
+                        <p class="text-xs text-slate-400 mt-1">Qlik CDC, Control-M</p>
+                    </div>
+                </div>
+
+                <div
+                    class="glass-card p-5 rounded-xl flex items-center gap-4 hover:-translate-y-1 transition-transform duration-300">
+                    <div class="relative w-16 h-16 skill-circle" data-percent="82">
+                        <svg class="w-full h-full transform -rotate-90">
+                            <circle cx="32" cy="32" r="28" stroke="rgba(255,255,255,0.1)" stroke-width="6" fill="none">
+                            </circle>
+                            <circle cx="32" cy="32" r="28" stroke="#818cf8" stroke-width="6" fill="none"
+                                stroke-dasharray="175" stroke-dashoffset="175" class="progress"></circle>
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center font-bold text-sm text-white">82%
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-lg">Programming</h4>
+                        <p class="text-xs text-slate-400 mt-1">Python, PySpark, SQL</p>
+                    </div>
+                </div>
+
+                <div
+                    class="glass-card p-5 rounded-xl flex items-center gap-4 hover:-translate-y-1 transition-transform duration-300">
+                    <div class="relative w-16 h-16 skill-circle" data-percent="78">
+                        <svg class="w-full h-full transform -rotate-90">
+                            <circle cx="32" cy="32" r="28" stroke="rgba(255,255,255,0.1)" stroke-width="6" fill="none">
+                            </circle>
+                            <circle cx="32" cy="32" r="28" stroke="#34d399" stroke-width="6" fill="none"
+                                stroke-dasharray="175" stroke-dashoffset="175" class="progress"></circle>
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center font-bold text-sm text-white">78%
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-lg">Cloud Platform</h4>
+                        <p class="text-xs text-slate-400 mt-1">Azure, Cloud Patterns</p>
+                    </div>
+                </div>
+
+                <div
+                    class="glass-card p-5 rounded-xl flex items-center gap-4 hover:-translate-y-1 transition-transform duration-300">
+                    <div class="relative w-16 h-16 skill-circle" data-percent="89">
+                        <svg class="w-full h-full transform -rotate-90">
+                            <circle cx="32" cy="32" r="28" stroke="rgba(255,255,255,0.1)" stroke-width="6" fill="none">
+                            </circle>
+                            <circle cx="32" cy="32" r="28" stroke="#f472b6" stroke-width="6" fill="none"
+                                stroke-dasharray="175" stroke-dashoffset="175" class="progress"></circle>
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center font-bold text-sm text-white">89%
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-lg">Databases</h4>
+                        <p class="text-xs text-slate-400 mt-1">Snowflake, DB2, SQL</p>
+                    </div>
+                </div>
+
+                <div
+                    class="glass-card p-5 rounded-xl flex items-center gap-4 hover:-translate-y-1 transition-transform duration-300">
+                    <div class="relative w-16 h-16 skill-circle" data-percent="80">
+                        <svg class="w-full h-full transform -rotate-90">
+                            <circle cx="32" cy="32" r="28" stroke="rgba(255,255,255,0.1)" stroke-width="6" fill="none">
+                            </circle>
+                            <circle cx="32" cy="32" r="28" stroke="#fbbf24" stroke-width="6" fill="none"
+                                stroke-dasharray="175" stroke-dashoffset="175" class="progress"></circle>
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center font-bold text-sm text-white">80%
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-lg">Data Quality</h4>
+                        <p class="text-xs text-slate-400 mt-1">Pipelines & Governance</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="projects" class="py-24">
+            <h2 class="text-3xl font-bold text-white mb-12 text-center reveal">Featured <span
+                    class="text-cyan-400">Deployments</span></h2>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+                <article class="glass-card rounded-2xl overflow-hidden group reveal">
+                    <div class="h-2 bg-gradient-to-r from-blue-500 to-cyan-400"></div>
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors">Flood
+                                the Lake</h3>
+                            <span class="text-xs font-mono bg-slate-800 text-slate-300 px-2 py-1 rounded">2024-25</span>
+                        </div>
+                        <p class="text-slate-400 text-sm mb-6 leading-relaxed">
+                            Consolidated enterprise data into Snowflake from PL Claims & DB2 using Qlik Replicate.
+                            Engineered incremental load patterns.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mt-auto">
+                            <span
+                                class="px-3 py-1 text-xs font-mono border border-slate-700 rounded-full text-cyan-300">Snowflake</span>
+                            <span
+                                class="px-3 py-1 text-xs font-mono border border-slate-700 rounded-full text-cyan-300">Qlik</span>
+                            <span
+                                class="px-3 py-1 text-xs font-mono border border-slate-700 rounded-full text-cyan-300">Python</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="glass-card rounded-2xl overflow-hidden group reveal stagger-delay-1">
+                    <div class="h-2 bg-gradient-to-r from-purple-500 to-pink-500"></div>
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-xl font-bold text-white group-hover:text-purple-400 transition-colors">
+                                Liberty Andes</h3>
+                            <span class="text-xs font-mono bg-slate-800 text-slate-300 px-2 py-1 rounded">2023</span>
+                        </div>
+                        <p class="text-slate-400 text-sm mb-6 leading-relaxed">
+                            Architected multi-country data flows for Chile, Colombia & Ecuador. Landing → Cleaning →
+                            Warehouse pipeline for BI analytics.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mt-auto">
+                            <span
+                                class="px-3 py-1 text-xs font-mono border border-slate-700 rounded-full text-purple-300">Informatica</span>
+                            <span
+                                class="px-3 py-1 text-xs font-mono border border-slate-700 rounded-full text-purple-300">Oracle</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="glass-card rounded-2xl overflow-hidden group reveal stagger-delay-2">
+                    <div class="h-2 bg-gradient-to-r from-green-500 to-emerald-400"></div>
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-xl font-bold text-white group-hover:text-green-400 transition-colors">
+                                ShiftX-1B</h3>
+                            <span
+                                class="text-xs font-mono bg-green-900/30 text-green-400 border border-green-500/30 px-2 py-1 rounded">Ongoing</span>
+                        </div>
+                        <p class="text-slate-400 text-sm mb-6 leading-relaxed">
+                            Large-scale migration focusing on data integrity and minimal downtime. Designing resiliency
+                            strategies for critical pipelines.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mt-auto">
+                            <span
+                                class="px-3 py-1 text-xs font-mono border border-slate-700 rounded-full text-green-300">Migration</span>
+                            <span
+                                class="px-3 py-1 text-xs font-mono border border-slate-700 rounded-full text-green-300">Architecture</span>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <section id="feedback" class="py-24">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl font-bold text-white mb-4">Performance & Growth <span
+                        class="text-cyan-400">Insights</span></h2>
+                <p class="text-slate-400 max-w-2xl mx-auto">Distilled feedback from Senior Architects and Project
+                    Managers highlighting key achievements.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 reveal stagger-delay-1">
+
+                <div
+                    class="glass-card p-6 rounded-xl border border-white/5 bg-gradient-to-br from-white/5 to-transparent relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-40 transition-opacity">
+                        <svg class="w-8 h-8 text-yellow-400" fill="currentColor" viewBox="0 0 24 24">
+                            <path
+                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h4 class="font-bold text-white text-lg mb-2">Unparalleled Contributor</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        "Delivered all major FTL artifacts with <span class="text-cyan-400 font-semibold">zero major
+                            defects</span>."
+                    </p>
+                </div>
+
+                <div
+                    class="glass-card p-6 rounded-xl border border-white/5 bg-gradient-to-br from-white/5 to-transparent relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-40 transition-opacity">
+                        <svg class="w-8 h-8 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h4 class="font-bold text-white text-lg mb-2">Technical Adaptability</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        "Quickly mastered <span class="text-white font-mono text-xs">Qlik Replication</span> and <span
+                            class="text-white font-mono text-xs">Snowflake SQL</span> for efficient execution."
+                    </p>
+                </div>
+
+                <div
+                    class="glass-card p-6 rounded-xl border border-white/5 bg-gradient-to-br from-white/5 to-transparent relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-40 transition-opacity">
+                        <svg class="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h4 class="font-bold text-white text-lg mb-2">Reliability & Dedication</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        "Consistently demonstrated a willingness to stretch to meet demanding project timelines."
+                    </p>
+                </div>
+
+                <div
+                    class="glass-card p-6 rounded-xl border border-white/5 bg-gradient-to-br from-white/5 to-transparent relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-40 transition-opacity">
+                        <svg class="w-8 h-8 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h4 class="font-bold text-white text-lg mb-2">Compliance & Quality</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        "Met SLA for data classifications and ensured data quality in all ingestion phases."
+                    </p>
+                </div>
+
+                <div
+                    class="glass-card p-6 rounded-xl border border-white/5 bg-gradient-to-br from-white/5 to-transparent relative overflow-hidden group md:col-span-2 lg:col-span-2">
+                    <div class="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-40 transition-opacity">
+                        <svg class="w-8 h-8 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h4 class="font-bold text-white text-lg mb-2">Team Player</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        "Showcased strong collaborative abilities during core development activities."
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="timeline" class="py-24 max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold text-white mb-16 text-center reveal">Professional <span
+                    class="text-cyan-400">Path</span></h2>
+
+            <div class="relative border-l border-slate-800 ml-4 md:ml-0 space-y-12">
+
+                <div class="relative pl-8 md:pl-0 md:flex items-center group reveal">
+                    <div
+                        class="absolute -left-[5px] md:left-1/2 md:-ml-[5px] w-3 h-3 rounded-full bg-cyan-500 shadow-[0_0_10px_rgba(6,182,212,0.6)] z-10">
+                    </div>
+
+                    <div class="hidden md:block w-1/2 pr-12 text-right">
+                        <span class="font-mono text-cyan-400 text-sm">Jul 2025 - Present</span>
+                    </div>
+
+                    <div class="w-full md:w-1/2 md:pl-12">
+                        <div class="glass-card p-6 rounded-xl border-l-4 border-l-cyan-500 relative">
+                            <span class="md:hidden font-mono text-cyan-400 text-xs mb-2 block">Jul 2025 - Present</span>
+                            <h3 class="text-lg font-bold text-white">Associate Data Engineer</h3>
+                            <p class="text-sm text-slate-400 mt-2">Leading the ShiftX-1B migration resiliency
+                                initiative.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative pl-8 md:pl-0 md:flex items-center group reveal">
+                    <div
+                        class="absolute -left-[5px] md:left-1/2 md:-ml-[5px] w-3 h-3 rounded-full bg-slate-600 group-hover:bg-cyan-500 transition-colors z-10">
+                    </div>
+
+                    <div class="hidden md:block w-1/2 pr-12 text-right">
+                        <div
+                            class="glass-card p-6 rounded-xl border-r-4 border-r-slate-600 hover:border-r-cyan-500 transition-colors">
+                            <h3 class="text-lg font-bold text-white">Programmer Analyst</h3>
+                            <p class="text-sm text-slate-400 mt-2">Led Project FTL (Snowflake Consolidation).
+                                Implemented CDC pipelines.</p>
+                        </div>
+                    </div>
+
+                    <div class="w-full md:w-1/2 md:pl-12">
+                        <span class="hidden md:block font-mono text-slate-500 text-sm">Feb 2024 - Jul 2025</span>
+                        <div class="md:hidden glass-card p-6 rounded-xl border-l-4 border-l-slate-600">
+                            <span class="font-mono text-slate-500 text-xs mb-2 block">Feb 2024 - Jul 2025</span>
+                            <h3 class="text-lg font-bold text-white">Programmer Analyst</h3>
+                            <p class="text-sm text-slate-400 mt-2">Led Project FTL (Snowflake Consolidation).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative pl-8 md:pl-0 md:flex items-center group reveal">
+                    <div class="absolute -left-[5px] md:left-1/2 md:-ml-[5px] w-3 h-3 rounded-full bg-slate-700 z-10">
+                    </div>
+
+                    <div class="hidden md:block w-1/2 pr-12 text-right">
+                        <span class="font-mono text-slate-600 text-sm">Feb 2023 - Feb 2024</span>
+                    </div>
+
+                    <div class="w-full md:w-1/2 md:pl-12">
+                        <div class="glass-card p-6 rounded-xl border-l-4 border-l-slate-700">
+                            <span class="md:hidden font-mono text-slate-600 text-xs mb-2 block">Feb 2023 - Feb
+                                2024</span>
+                            <h3 class="text-lg font-bold text-white">Trainee Analyst</h3>
+                            <p class="text-sm text-slate-400 mt-2">Developer for Project Liberty Andes. Handled
+                                multi-country ingestion.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <footer class="mt-24 text-center border-t border-slate-800 pt-12">
+            <h2 class="text-3xl font-bold text-white mb-6">Let's talk <span class="text-cyan-400">Data.</span></h2>
+            <div class="flex justify-center gap-6 mb-12">
+                <a href="mailto:learner.ayush10@gmail.com"
+                    class="text-slate-400 hover:text-white transition-colors">Email</a>
+                <a href="https://linkedin.com/in/ayush-kumar-0b6828173" target="_blank"
+                    class="text-slate-400 hover:text-white transition-colors">LinkedIn</a>
+                <a href="tel:+917763994558" class="text-slate-400 hover:text-white transition-colors">+91 77639
+                    94558</a>
+            </div>
+            <p class="text-slate-600 text-sm">© <span id="year"></span> Ayush Kumar. Built with code, coffee & cloud.
+            </p>
+        </footer>
+
+    </main>
+
+    <script>
+        // --- 1. Typewriter Effect ---
+        const roles = ["Data Pipelines", "Cloud Architecture", "Resilient ETL", "Snowflake Schemas"];
+        let roleIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typeSpeed = 100;
+        const deleteSpeed = 50;
+        const pauseTime = 2000;
+        const typeTarget = document.getElementById('typewriter');
+
+        function typeWriter() {
+            const currentRole = roles[roleIndex];
+            if (isDeleting) {
+                typeTarget.textContent = currentRole.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typeTarget.textContent = currentRole.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let timer = isDeleting ? deleteSpeed : typeSpeed;
+
+            if (!isDeleting && charIndex === currentRole.length) {
+                timer = pauseTime;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                roleIndex = (roleIndex + 1) % roles.length;
+            }
+
+            setTimeout(typeWriter, timer);
+        }
+        document.addEventListener('DOMContentLoaded', typeWriter);
+
+        // --- 2. Scroll Animations (Intersection Observer) ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    // Trigger skill circle animation if visible
+                    if (entry.target.querySelector('.skill-circle')) {
+                        entry.target.querySelectorAll('.skill-circle').forEach(circle => {
+                            const percent = circle.getAttribute('data-percent');
+                            const circumference = 2 * Math.PI * 28; // r=28
+                            const offset = circumference - (percent / 100) * circumference;
+                            circle.querySelector('.progress').style.strokeDashoffset = offset;
+                        });
+                    }
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // --- 3. Navbar Blur Effect ---
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) nav.classList.add('scrolled');
+            else nav.classList.remove('scrolled');
+        });
+
+        // --- 4. 3D Tilt Effect for Hero Cards ---
+        document.addEventListener('mousemove', (e) => {
+            const cards = document.querySelectorAll('.tilt-card');
+            const x = (window.innerWidth / 2 - e.pageX) / 25;
+            const y = (window.innerHeight / 2 - e.pageY) / 25;
+
+            cards.forEach(card => {
+                card.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+            });
+        });
+
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // --- 5. Simple Particle System ---
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particlesArray;
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2;
+                this.speedX = Math.random() * 0.5 - 0.25;
+                this.speedY = Math.random() * 0.5 - 0.25;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
+            draw() {
+                ctx.fillStyle = 'rgba(34, 211, 238, 0.5)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particlesArray = [];
+            for (let i = 0; i < 50; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+            }
+            requestAnimationFrame(animateParticles);
+        }
+
+        initParticles();
+        animateParticles();
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initParticles();
+        });
+
+    </script>
+</body>
+
+</html>

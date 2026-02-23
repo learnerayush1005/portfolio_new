@@ -1,0 +1,1337 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Ayush Kumar — Data Engineer (Parallax Gradient)</title>
+    <meta name="description"
+        content="Ayush Kumar — Data Engineer. Snowflake, Qlik Replicate, PySpark, Control-M. Portfolio with projects, timeline and skills." />
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --navy-900: #04132b;
+            --navy-800: #07294a;
+            --cyan-500: #06b6d4;
+            --cyan-400: #22d3ee;
+            --muted: rgba(255, 255, 255, 0.82);
+            --glass: rgba(255, 255, 255, 0.06);
+            --accent-glow: rgba(6, 182, 212, 0.12);
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background: #071022;
+            color: #e6eef3;
+        }
+
+        /* Light theme overrides (toggleable) */
+        :root.light {
+            --bg: #f6f8fb;
+            --text: #0b1b26;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        :root.light .nav-glass {
+            background: linear-gradient(180deg, rgba(11, 27, 38, 0.06), rgba(11, 27, 38, 0.03));
+        }
+
+        :root.light .card,
+        :root.light .project-card,
+        :root.light .competency-shell {
+            box-shadow: 0 8px 20px rgba(4, 8, 15, 0.04);
+            border-color: rgba(11, 27, 38, 0.06);
+        }
+
+        :root.light .btn-primary {
+            box-shadow: 0 8px 30px rgba(6, 22, 46, 0.06);
+        }
+
+        :root.light a {
+            color: #064e60;
+        }
+
+        /* Animated multi-layer gradient background */
+        .bg-gradient {
+            position: fixed;
+            inset: 0;
+            z-index: -30;
+            background: linear-gradient(120deg, #04243a 0%, #063a4a 28%, #0a9fb4 60%, #22d3ee 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 16s linear infinite;
+            will-change: transform, background-position;
+            transform: translate3d(0, 0, 0);
+            pointer-events: none;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* particles canvas layer */
+        #particlesCanvas {
+            position: fixed;
+            inset: 0;
+            z-index: -25;
+            pointer-events: none;
+            will-change: transform;
+        }
+
+        /* nav */
+        .nav-glass {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.03));
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .nav-glass.scrolled {
+            transform: translateY(-6px) scale(.996);
+            box-shadow: 0 12px 40px rgba(3, 10, 24, 0.45);
+        }
+
+        /* container spacing and consistent section padding */
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 96px 20px 80px;
+        }
+
+        section {
+            padding: clamp(36px, 5vw, 64px) 0;
+        }
+
+        /* reveal animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(18px) scale(.996);
+            transition: all .72s cubic-bezier(.2, .9, .2, 1);
+            will-change: transform, opacity;
+        }
+
+        .reveal.in-view {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .reveal-stagger>* {
+            opacity: 0;
+            transform: translateY(12px);
+        }
+
+        .reveal-stagger.in-view>* {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-stagger.in-view>*:nth-child(1) {
+            transition-delay: .06s;
+        }
+
+        .reveal-stagger.in-view>*:nth-child(2) {
+            transition-delay: .12s;
+        }
+
+        .reveal-stagger.in-view>*:nth-child(3) {
+            transition-delay: .18s;
+        }
+
+        .reveal-stagger.in-view>*:nth-child(4) {
+            transition-delay: .24s;
+        }
+
+        /* glass card */
+        .card {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.03));
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(2, 6, 23, 0.48);
+            padding: 18px;
+        }
+
+        /* hero style */
+        .hero-title {
+            font-size: clamp(1.9rem, 4.5vw, 3.6rem);
+            line-height: 1.02;
+            font-weight: 900;
+            color: #ffffff;
+        }
+
+        .hero-sub {
+            color: rgba(255, 255, 255, 0.86);
+            max-width: 56ch;
+            margin-top: 12px;
+        }
+
+        /* CTA buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: .6rem;
+            padding: .65rem 1rem;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--cyan-500), var(--navy-800));
+            color: white;
+            box-shadow: 0 12px 40px rgba(6, 22, 46, 0.36);
+            border: none;
+        }
+
+        .btn-ghost {
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--muted);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        /* competency section overlay to increase contrast */
+        .competency-shell {
+            position: relative;
+            border-radius: 14px;
+            overflow: hidden;
+            padding: 24px;
+        }
+
+        .competency-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(4, 19, 43, 0.72), rgba(4, 19, 43, 0.6));
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .competency-inner {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* skill grid (responsive) */
+        .skill-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            align-items: center;
+        }
+
+        @media (max-width: 920px) {
+            .skill-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 560px) {
+            .skill-grid {
+                grid-template-columns: repeat(1, 1fr);
+            }
+        }
+
+        /* svg-circle wrapper */
+        .svg-circle {
+            --size: 128px;
+            width: var(--size);
+            height: var(--size);
+            border-radius: 9999px;
+            position: relative;
+            display: grid;
+            place-items: center;
+            margin-right: 14px;
+        }
+
+        .svg-circle svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .svg-circle .svg-mask {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            text-align: center;
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .svg-circle .svg-value {
+            font-weight: 800;
+            font-size: 18px;
+        }
+
+        /* small card layout for each skill row */
+        .skill-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            border-radius: 10px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        /* projects */
+        .project-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 12px;
+            padding: 18px;
+            box-shadow: 0 10px 30px rgba(2, 6, 23, 0.45);
+            transition: transform .28s cubic-bezier(.2, .9, .2, 1), box-shadow .28s;
+        }
+
+        .project-card:hover,
+        .project-card:focus-within {
+            transform: translateY(-6px);
+            box-shadow: 0 22px 60px rgba(2, 6, 23, 0.6);
+        }
+
+        /* timeline line */
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            background: rgba(255, 255, 255, 0.06);
+            top: 0;
+            bottom: 0;
+            border-radius: 2px;
+        }
+
+        /* back to top */
+        #backToTop {
+            position: fixed;
+            right: 18px;
+            bottom: 22px;
+            background: linear-gradient(90deg, var(--cyan-500), var(--navy-800));
+            color: white;
+            padding: 10px 12px;
+            border-radius: 999px;
+            display: none;
+            z-index: 60;
+            box-shadow: 0 12px 40px rgba(2, 6, 23, 0.45);
+            cursor: pointer;
+        }
+
+        #backToTop.show {
+            display: flex;
+        }
+
+        /* subtle focus for accessibility */
+        a:focus {
+            outline: 3px solid rgba(34, 211, 238, 0.14);
+            outline-offset: 4px;
+            border-radius: 8px;
+        }
+
+        /* mobile nav overlay */
+        #mobileNav {
+            background: linear-gradient(180deg, rgba(3, 6, 12, 0.6), rgba(3, 6, 12, 0.85));
+            color: white;
+        }
+
+        #mobileNav a {
+            color: white;
+            text-decoration: none;
+        }
+
+        /* svg progress transition */
+        .progress {
+            transition: stroke-dashoffset 900ms cubic-bezier(.2, .9, .2, 1);
+            filter: drop-shadow(0 8px 18px rgba(6, 182, 212, 0.06));
+        }
+
+        /* small responsive tweaks */
+        @media (max-width: 640px) {
+            main {
+                padding-top: 84px;
+                padding-left: 16px;
+                padding-right: 16px;
+            }
+
+            .svg-circle {
+                --size: 110px;
+                margin-right: 12px;
+            }
+        }
+
+        /* prefers-reduced-motion - remove animations */
+        @media (prefers-reduced-motion: reduce) {
+            .bg-gradient {
+                animation: none !important;
+            }
+
+            .reveal,
+            .reveal-stagger {
+                transition: none !important;
+                transform: none !important;
+                opacity: 1 !important;
+            }
+
+            .progress {
+                transition: none !important;
+            }
+        }
+
+        /* small utility */
+        .sr-only {
+            position: absolute !important;
+            height: 1px;
+            width: 1px;
+            overflow: hidden;
+            clip: rect(1px, 1px, 1px, 1px);
+            white-space: nowrap;
+            border: 0;
+            padding: 0;
+            margin: -1px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- background gradient layer -->
+    <div class="bg-gradient" id="bgGradient" aria-hidden="true"></div>
+
+    <!-- particles canvas -->
+    <canvas id="particlesCanvas" aria-hidden="true"></canvas>
+
+    <!-- Navigation -->
+    <header class="fixed w-full top-4 left-0 z-40 flex justify-center px-4" role="banner">
+        <nav id="navBar" class="w-full max-w-6xl nav-glass px-4 py-2 flex items-center justify-between"
+            role="navigation" aria-label="Main navigation">
+            <div class="flex items-center gap-4">
+                <div
+                    style="width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:linear-gradient(90deg,var(--cyan-500),var(--navy-800));font-weight:900;color:white">
+                    AK</div>
+                <div>
+                    <div style="font-weight:700;color:white">Ayush Kumar</div>
+                    <div style="font-size:12px;color:rgba(255,255,255,0.76)">Data Engineer</div>
+                </div>
+            </div>
+
+            <div class="hidden md:flex items-center gap-4" role="menubar" aria-hidden="false">
+                <a href="#competencies" style="color:rgba(255,255,255,0.9)" role="menuitem">Skills</a>
+                <a href="#projects" style="color:rgba(255,255,255,0.9)" role="menuitem">Projects</a>
+                <a href="#timeline" style="color:rgba(255,255,255,0.9)" role="menuitem">Timeline</a>
+                <a href="#connect" class="btn btn-primary">Let's Connect</a>
+                <a href="My Resume (1).pdf" class="btn btn-ghost" download rel="noopener noreferrer">Download Résumé</a>
+                <button id="themeToggle" aria-label="Toggle theme" title="Toggle theme" class="p-2 rounded-md"
+                    style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03);">🌙</button>
+            </div>
+
+            <!-- mobile controls -->
+            <div class="md:hidden flex items-center gap-2">
+                <a href="My Resume (1).pdf" class="btn btn-ghost" download rel="noopener noreferrer">Resume</a>
+                <button id="navToggle" aria-controls="mobileNav" aria-expanded="false" class="p-3 rounded-md"
+                    aria-label="Open menu"
+                    style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.03);color:var(--muted)">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.6"
+                            stroke-linecap="round" />
+                    </svg>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Mobile nav overlay -->
+    <div id="mobileNav" class="fixed inset-0 z-50 hidden" aria-hidden="true" role="dialog" aria-modal="true">
+        <div
+            style="position:absolute;inset:0;background:rgba(2,6,23,0.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)">
+        </div>
+        <div
+            style="height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;position:relative;z-index:2">
+            <a href="#competencies" class="text-2xl" role="menuitem">Skills</a>
+            <a href="#projects" class="text-2xl" role="menuitem">Projects</a>
+            <a href="#timeline" class="text-2xl" role="menuitem">Timeline</a>
+            <a href="#connect" class="btn btn-primary">Let's Connect</a>
+            <button id="mobileClose" class="absolute top-6 right-6 p-2" aria-label="Close menu"
+                style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.03);border-radius:8px">✕</button>
+        </div>
+    </div>
+
+    <!-- Main content -->
+    <main>
+        <!-- HERO -->
+        <section id="hero" class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <div class="reveal">
+                <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:10px">
+                    <span
+                        style="background:rgba(255,255,255,0.07);padding:.35rem .6rem;border-radius:999px;font-weight:700;font-size:12px">Snowflake
+                        • PySpark • Qlik</span>
+                    <span style="font-size:13px;color:rgba(255,255,255,0.78)">Modern Data Pipelines</span>
+                </div>
+
+                <h1 class="hero-title">Ayush Kumar</h1>
+                <p class="hero-sub">I build and operate reliable, cloud-scale data pipelines — Snowflake, CDC ingestion
+                    with Qlik Replicate, PySpark transforms, and resilient orchestration using Control-M.</p>
+
+                <div style="margin-top:18px;display:flex;align-items:center;gap:20px">
+                    <div>
+                        <div id="yearsCounter" style="font-size:34px;font-weight:900;color:white">0</div>
+                        <div style="font-size:13px;color:rgba(255,255,255,0.78)">Years experience</div>
+                    </div>
+
+                    <div style="display:flex;gap:12px">
+                        <a href="#connect" class="btn btn-primary">Let's Connect</a>
+                        <a href="https://linkedin.com/in/ayush-kumar-0b6828173" target="_blank"
+                            rel="noopener noreferrer" class="btn btn-ghost">LinkedIn</a>
+                    </div>
+                </div>
+
+                <div style="margin-top:14px;color:rgba(255,255,255,0.78);font-size:13px">
+                    <span>📍 Bokaro Steel City, Jharkhand</span> <span style="margin:0 8px">•</span> <span>Open to
+                        remote & hybrid roles</span>
+                </div>
+            </div>
+
+            <div class="reveal reveal-stagger">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+                    <div class="card float-card">
+                        <div style="display:flex;gap:10px;align-items:flex-start">
+                            <div
+                                style="width:40px;height:40px;border-radius:8px;background:linear-gradient(90deg,var(--cyan-500),var(--navy-800));display:flex;align-items:center;justify-content:center;font-weight:800">
+                                SF</div>
+                            <div>
+                                <div style="font-size:12px;color:rgba(255,255,255,0.78)">Primary Strength</div>
+                                <div style="font-weight:800;margin-top:6px">Snowflake & ELT</div>
+                                <div style="font-size:13px;color:rgba(255,255,255,0.7);margin-top:6px">Schema design,
+                                    consolidation, performance tuning</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card float-card">
+                        <div style="display:flex;gap:10px;align-items:flex-start">
+                            <div
+                                style="width:40px;height:40px;border-radius:8px;background:linear-gradient(90deg,#7dd3fc,#0ea5a4);display:flex;align-items:center;justify-content:center;font-weight:800">
+                                Py</div>
+                            <div>
+                                <div style="font-size:12px;color:rgba(255,255,255,0.78)">Languages</div>
+                                <div style="font-weight:800;margin-top:6px">Python • SQL • C</div>
+                                <div style="font-size:13px;color:rgba(255,255,255,0.7);margin-top:6px">PySpark, modular
+                                    transforms, optimization</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card float-card">
+                        <div style="display:flex;gap:10px;align-items:flex-start">
+                            <div
+                                style="width:40px;height:40px;border-radius:8px;background:linear-gradient(90deg,#fbbf24,#fb923c);display:flex;align-items:center;justify-content:center;font-weight:800">
+                                Q</div>
+                            <div>
+                                <div style="font-size:12px;color:rgba(255,255,255,0.78)">Integration</div>
+                                <div style="font-weight:800;margin-top:6px">Qlik Replicate • Informatica</div>
+                                <div style="font-size:13px;color:rgba(255,255,255,0.7);margin-top:6px">CDC ingestion &
+                                    reliability</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card float-card">
+                        <div style="display:flex;gap:10px;align-items:flex-start">
+                            <div
+                                style="width:40px;height:40px;border-radius:8px;background:linear-gradient(90deg,#06b6d4,#22d3ee);display:flex;align-items:center;justify-content:center;font-weight:800">
+                                Ops</div>
+                            <div>
+                                <div style="font-size:12px;color:rgba(255,255,255,0.78)">Orchestration</div>
+                                <div style="font-weight:800;margin-top:6px">Control-M</div>
+                                <div style="font-size:13px;color:rgba(255,255,255,0.7);margin-top:6px">Scheduling &
+                                    monitoring</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CORE COMPETENCIES (high contrast, glass + overlay) -->
+        <section id="competencies" class="reveal" aria-labelledby="competencies-heading">
+            <div class="competency-shell">
+                <div class="competency-overlay" aria-hidden="true"></div>
+                <div class="competency-inner">
+                    <div
+                        style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:18px">
+                        <div>
+                            <div id="competencies-heading" style="font-weight:800;font-size:20px;color:white">Core
+                                Competencies</div>
+                            <div style="color:rgba(255,255,255,0.82);margin-top:6px">Technical snapshot — animated on
+                                scroll</div>
+                        </div>
+                        <div style="color:rgba(255,255,255,0.68);font-size:13px">Values reflect relative proficiency
+                        </div>
+                    </div>
+
+                    <!-- skill grid -->
+                    <div class="skill-grid">
+                        <!-- item 1 -->
+                        <div class="skill-row">
+                            <div class="svg-circle" role="img" aria-label="Data Warehousing 92 percent"
+                                data-percent="92" data-accent="#06b6d4">
+                                <svg viewBox="0 0 120 120" width="120" height="120" aria-hidden="true"
+                                    focusable="false">
+                                    <defs>
+                                        <linearGradient id="g-dw" x1="0" x2="1">
+                                            <stop offset="0" stop-color="#06b6d4" />
+                                            <stop offset="1" stop-color="#22d3ee" />
+                                        </linearGradient>
+                                    </defs>
+                                    <circle cx="60" cy="60" r="50" stroke="rgba(255,255,255,0.03)" stroke-width="10"
+                                        fill="none" />
+                                    <circle class="progress" cx="60" cy="60" r="50" stroke="url(#g-dw)"
+                                        stroke-width="10" fill="none" stroke-linecap="round" stroke-dasharray="314.16"
+                                        stroke-dashoffset="314.16" transform="rotate(-90 60 60)" />
+                                </svg>
+                                <div class="svg-mask">
+                                    <div class="svg-value">0%</div>
+                                    <div style="font-size:12px;opacity:.95;margin-top:6px;max-width:120px">Data
+                                        Warehousing</div>
+                                </div>
+                            </div>
+                            <div>
+                                <div style="font-weight:700;color:white">Data Warehousing</div>
+                                <div style="color:rgba(255,255,255,0.78);font-size:13px;margin-top:6px">Designing
+                                    schemas, consolidation & Snowflake performance tuning.</div>
+                            </div>
+                        </div>
+
+                        <!-- item 2 -->
+                        <div class="skill-row">
+                            <div class="svg-circle" role="img" aria-label="ETL and Orchestration 86 percent"
+                                data-percent="86" data-accent="#22d3ee">
+                                <svg viewBox="0 0 120 120" width="120" height="120" aria-hidden="true"
+                                    focusable="false">
+                                    <defs>
+                                        <linearGradient id="g-etl" x1="0" x2="1">
+                                            <stop offset="0" stop-color="#22d3ee" />
+                                            <stop offset="1" stop-color="#06b6d4" />
+                                        </linearGradient>
+                                    </defs>
+                                    <circle cx="60" cy="60" r="50" stroke="rgba(255,255,255,0.03)" stroke-width="10"
+                                        fill="none" />
+                                    <circle class="progress" cx="60" cy="60" r="50" stroke="url(#g-etl)"
+                                        stroke-width="10" fill="none" stroke-linecap="round" stroke-dasharray="314.16"
+                                        stroke-dashoffset="314.16" transform="rotate(-90 60 60)" />
+                                </svg>
+                                <div class="svg-mask">
+                                    <div class="svg-value">0%</div>
+                                    <div style="font-size:12px;opacity:.95;margin-top:6px;max-width:120px">ETL /
+                                        Orchestration</div>
+                                </div>
+                            </div>
+                            <div>
+                                <div style="font-weight:700;color:white">ETL & Orchestration</div>
+                                <div style="color:rgba(255,255,255,0.78);font-size:13px;margin-top:6px">CDC ingestion
+                                    (Qlik) and workflow automation (Control-M).</div>
+                            </div>
+                        </div>
+
+                        <!-- item 3 -->
+                        <div class="skill-row">
+                            <div class="svg-circle" role="img" aria-label="Programming 82 percent" data-percent="82"
+                                data-accent="#06b6d4">
+                                <svg viewBox="0 0 120 120" width="120" height="120" aria-hidden="true"
+                                    focusable="false">
+                                    <defs>
+                                        <linearGradient id="g-prog" x1="0" x2="1">
+                                            <stop offset="0" stop-color="#06b6d4" />
+                                            <stop offset="1" stop-color="#a78bfa" />
+                                        </linearGradient>
+                                    </defs>
+                                    <circle cx="60" cy="60" r="50" stroke="rgba(255,255,255,0.03)" stroke-width="10"
+                                        fill="none" />
+                                    <circle class="progress" cx="60" cy="60" r="50" stroke="url(#g-prog)"
+                                        stroke-width="10" fill="none" stroke-linecap="round" stroke-dasharray="314.16"
+                                        stroke-dashoffset="314.16" transform="rotate(-90 60 60)" />
+                                </svg>
+                                <div class="svg-mask">
+                                    <div class="svg-value">0%</div>
+                                    <div style="font-size:12px;opacity:.95;margin-top:6px;max-width:120px">Programming
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div style="font-weight:700;color:white">Programming</div>
+                                <div style="color:rgba(255,255,255,0.78);font-size:13px;margin-top:6px">Python, PySpark,
+                                    performant SQL and automation scripts.</div>
+                            </div>
+                        </div>
+
+                        <!-- item 4 -->
+                        <div class="skill-row">
+                            <div class="svg-circle" role="img" aria-label="Cloud Platform 78 percent" data-percent="78"
+                                data-accent="#22d3ee">
+                                <svg viewBox="0 0 120 120" width="120" height="120" aria-hidden="true"
+                                    focusable="false">
+                                    <defs>
+                                        <linearGradient id="g-cloud" x1="0" x2="1">
+                                            <stop offset="0" stop-color="#22d3ee" />
+                                            <stop offset="1" stop-color="#06b6d4" />
+                                        </linearGradient>
+                                    </defs>
+                                    <circle cx="60" cy="60" r="50" stroke="rgba(255,255,255,0.03)" stroke-width="10"
+                                        fill="none" />
+                                    <circle class="progress" cx="60" cy="60" r="50" stroke="url(#g-cloud)"
+                                        stroke-width="10" fill="none" stroke-linecap="round" stroke-dasharray="314.16"
+                                        stroke-dashoffset="314.16" transform="rotate(-90 60 60)" />
+                                </svg>
+                                <div class="svg-mask">
+                                    <div class="svg-value">0%</div>
+                                    <div style="font-size:12px;opacity:.95;margin-top:6px;max-width:120px">Cloud
+                                        Platform</div>
+                                </div>
+                            </div>
+                            <div>
+                                <div style="font-weight:700;color:white">Cloud Platform</div>
+                                <div style="color:rgba(255,255,255,0.78);font-size:13px;margin-top:6px">Azure training &
+                                    cloud deployment patterns.</div>
+                            </div>
+                        </div>
+
+                        <!-- item 5 -->
+                        <div class="skill-row">
+                            <div class="svg-circle" role="img" aria-label="Databases 89 percent" data-percent="89"
+                                data-accent="#06b6d4">
+                                <svg viewBox="0 0 120 120" width="120" height="120" aria-hidden="true"
+                                    focusable="false">
+                                    <defs>
+                                        <linearGradient id="g-db" x1="0" x2="1">
+                                            <stop offset="0" stop-color="#06b6d4" />
+                                            <stop offset="1" stop-color="#22d3ee" />
+                                        </linearGradient>
+                                    </defs>
+                                    <circle cx="60" cy="60" r="50" stroke="rgba(255,255,255,0.03)" stroke-width="10"
+                                        fill="none" />
+                                    <circle class="progress" cx="60" cy="60" r="50" stroke="url(#g-db)"
+                                        stroke-width="10" fill="none" stroke-linecap="round" stroke-dasharray="314.16"
+                                        stroke-dashoffset="314.16" transform="rotate(-90 60 60)" />
+                                </svg>
+                                <div class="svg-mask">
+                                    <div class="svg-value">0%</div>
+                                    <div style="font-size:12px;opacity:.95;margin-top:6px;max-width:120px">Databases
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div style="font-weight:700;color:white">Databases</div>
+                                <div style="color:rgba(255,255,255,0.78);font-size:13px;margin-top:6px">SQL, Snowflake,
+                                    DB2 handling & optimization.</div>
+                            </div>
+                        </div>
+
+                        <!-- item 6 -->
+                        <div class="skill-row">
+                            <div class="svg-circle" role="img" aria-label="Data Quality 80 percent" data-percent="80"
+                                data-accent="#22d3ee">
+                                <svg viewBox="0 0 120 120" width="120" height="120" aria-hidden="true"
+                                    focusable="false">
+                                    <defs>
+                                        <linearGradient id="g-dq" x1="0" x2="1">
+                                            <stop offset="0" stop-color="#22d3ee" />
+                                            <stop offset="1" stop-color="#06b6d4" />
+                                        </linearGradient>
+                                    </defs>
+                                    <circle cx="60" cy="60" r="50" stroke="rgba(255,255,255,0.03)" stroke-width="10"
+                                        fill="none" />
+                                    <circle class="progress" cx="60" cy="60" r="50" stroke="url(#g-dq)"
+                                        stroke-width="10" fill="none" stroke-linecap="round" stroke-dasharray="314.16"
+                                        stroke-dashoffset="314.16" transform="rotate(-90 60 60)" />
+                                </svg>
+                                <div class="svg-mask">
+                                    <div class="svg-value">0%</div>
+                                    <div style="font-size:12px;opacity:.95;margin-top:6px;max-width:120px">Data Quality
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div style="font-weight:700;color:white">Data Quality</div>
+                                <div style="color:rgba(255,255,255,0.78);font-size:13px;margin-top:6px">Validation
+                                    pipelines, monitoring & governance.</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects -->
+        <section id="projects" class="reveal">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px">
+                <div style="font-weight:800;font-size:20px">Selected Projects</div>
+                <div style="color:rgba(255,255,255,0.72)">Flagship initiatives & ongoing migration work</div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px">
+                <article class="project-card reveal" tabindex="0">
+                    <div style="display:flex;gap:12px">
+                        <div
+                            style="width:46px;height:46px;border-radius:10px;background:rgba(255,255,255,0.04);display:flex;align-items:center;justify-content:center">
+                            LA</div>
+                        <div>
+                            <h3 style="font-weight:800;color:white">Liberty Andes</h3>
+                            <div style="font-size:12px;color:rgba(255,255,255,0.72)">Aug 2023 — Dec 2023</div>
+                            <p style="color:rgba(255,255,255,0.78);margin-top:8px;font-size:13px">Oversaw multi-country
+                                data flows (Chile, Colombia & Ecuador): landing → cleaning → warehouse enabling BA/BI
+                                analytics.</p>
+                            <div style="margin-top:8px;color:rgba(255,255,255,0.72);font-size:13px">
+                                <strong>Role:</strong> Developer</div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="project-card reveal" tabindex="0">
+                    <div style="display:flex;gap:12px">
+                        <div
+                            style="width:46px;height:46px;border-radius:10px;background:rgba(255,255,255,0.04);display:flex;align-items:center;justify-content:center">
+                            FT</div>
+                        <div>
+                            <h3 style="font-weight:800;color:white">Flood the Lake (FTL)</h3>
+                            <div style="font-size:12px;color:rgba(255,255,255,0.72)">Apr 2024 — Aug 2025</div>
+                            <p style="color:rgba(255,255,255,0.78);margin-top:8px;font-size:13px">Consolidated
+                                enterprise data into Snowflake from PL Claims & DB2 using Qlik Replicate + PySpark;
+                                built validation & incremental load patterns.</p>
+                            <div style="margin-top:8px;color:rgba(255,255,255,0.72);font-size:13px">
+                                <strong>Role:</strong> Data Engineer / Developer</div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="project-card reveal" tabindex="0">
+                    <div style="display:flex;gap:12px">
+                        <div
+                            style="width:46px;height:46px;border-radius:10px;background:rgba(255,255,255,0.04);display:flex;align-items:center;justify-content:center">
+                            SX</div>
+                        <div>
+                            <h3 style="font-weight:800;color:white">ShiftX-1B (Ongoing)</h3>
+                            <div style="font-size:12px;color:rgba(255,255,255,0.72)">Jul 2025 — Present</div>
+                            <p style="color:rgba(255,255,255,0.78);margin-top:8px;font-size:13px">Large-scale migration
+                                focused on ensuring data integrity and minimal downtime; migration strategy &
+                                implementation support.</p>
+                            <div style="margin-top:8px;color:rgba(255,255,255,0.72);font-size:13px">
+                                <strong>Role:</strong> Associate (Data Engineer)</div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Timeline -->
+        <section id="timeline" class="reveal">
+            <div style="font-weight:800;font-size:20px;margin-bottom:10px">Career Timeline</div>
+            <div style="color:rgba(255,255,255,0.72);margin-bottom:14px">Progressive roles and impact</div>
+
+            <div style="position:relative;max-width:900px;margin:0 auto;padding-top:10px">
+                <div class="timeline-line" aria-hidden></div>
+                <div style="display:flex;flex-direction:column;gap:22px">
+                    <div style="display:flex;justify-content:flex-end">
+                        <div style="width:52%;text-align:right;padding-right:20px">
+                            <div
+                                style="background:rgba(255,255,255,0.04);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04)">
+                                <div style="display:flex;gap:10px;align-items:flex-start;justify-content:flex-end">
+                                    <div style="text-align:left;max-width:82%">
+                                        <div style="font-size:12px;color:rgba(255,255,255,0.72)">Feb 2023 — Feb 2024
+                                        </div>
+                                        <div style="font-weight:800;margin-top:6px">Programmer Analyst Trainee</div>
+                                        <div style="color:rgba(255,255,255,0.78);margin-top:6px">Project Liberty Andes —
+                                            Developer; supported multi-country ingestion & cleaning.</div>
+                                    </div>
+                                    <div
+                                        style="width:12px;height:12px;border-radius:999px;background:linear-gradient(180deg,var(--cyan-500),var(--cyan-400));box-shadow:0 10px 22px rgba(6,182,212,0.12)">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display:flex;justify-content:flex-start">
+                        <div style="width:52%;padding-left:20px">
+                            <div
+                                style="background:rgba(255,255,255,0.04);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04)">
+                                <div style="display:flex;gap:10px;align-items:flex-start">
+                                    <div
+                                        style="width:12px;height:12px;border-radius:999px;background:linear-gradient(180deg,var(--cyan-500),var(--cyan-400));box-shadow:0 10px 22px rgba(6,182,212,0.12)">
+                                    </div>
+                                    <div>
+                                        <div style="font-size:12px;color:rgba(255,255,255,0.72)">Feb 2024 — Jul 2025
+                                        </div>
+                                        <div style="font-weight:800;margin-top:6px">Programmer Analyst (Data Engineer)
+                                        </div>
+                                        <div style="color:rgba(255,255,255,0.78);margin-top:6px">Led Project FTL:
+                                            Snowflake consolidation, CDC ingestion & PySpark transforms.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display:flex;justify-content:flex-end">
+                        <div style="width:52%;text-align:right;padding-right:20px">
+                            <div
+                                style="background:rgba(255,255,255,0.04);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04)">
+                                <div style="display:flex;gap:10px;align-items:flex-start;justify-content:flex-end">
+                                    <div style="text-align:left;max-width:82%">
+                                        <div style="font-size:12px;color:rgba(255,255,255,0.72)">Jul 2025 — Present
+                                        </div>
+                                        <div style="font-weight:800;margin-top:6px">Associate (Data Engineer)</div>
+                                        <div style="color:rgba(255,255,255,0.78);margin-top:6px">Currently working on
+                                            ShiftX-1B migration and resiliency improvements.</div>
+                                    </div>
+                                    <div
+                                        style="width:12px;height:12px;border-radius:999px;background:linear-gradient(180deg,var(--cyan-500),var(--cyan-400));box-shadow:0 10px 22px rgba(6,182,212,0.12)">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Connect -->
+        <section id="connect" class="reveal">
+            <div
+                style="background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02)); padding:26px; border-radius:14px; display:flex;flex-direction:column;align-items:center;gap:12px">
+                <h2 style="font-weight:900;font-size:20px;color:white;margin:0">Let’s Build Something With Data</h2>
+                <p style="color:rgba(255,255,255,0.78);max-width:62ch;text-align:center;margin:0">Open to full-time
+                    roles or contract work — reach out and let’s talk about how we can make data drive impact.</p>
+
+                <div style="display:flex;gap:12px;margin-top:8px">
+                    <a class="btn btn-primary btn-contact" href="#contact" id="openContact">Email me</a>
+                    <a class="btn btn-ghost" href="My Resume (1).pdf" download rel="noopener noreferrer">Download
+                        Résumé</a>
+                    <a class="btn btn-ghost" href="https://linkedin.com/in/ayush-kumar-0b6828173" target="_blank"
+                        rel="noopener noreferrer">LinkedIn</a>
+                </div>
+
+                <div style="margin-top:6px;color:rgba(255,255,255,0.74)">Phone: <a href="tel:+917763994558"
+                        style="text-decoration:underline;color:rgba(255,255,255,0.9)">+91 77639 94558</a></div>
+            </div>
+        </section>
+
+        <footer style="text-align:center;padding-top:20px;color:rgba(255,255,255,0.72)">
+            <div style="font-weight:700">Ayush Kumar — Data Engineer</div>
+            <div style="margin-top:6px">© <span id="year"></span> Ayush Kumar</div>
+        </footer>
+    </main>
+
+    <!-- Back to top -->
+    <button id="backToTop" aria-label="Back to top">↑ Top</button>
+
+    <!-- Contact Modal (Formspree-ready) -->
+    <div id="contactModal" class="fixed inset-0 z-60 hidden items-center justify-center" aria-hidden="true"
+        role="dialog" aria-modal="true">
+        <div style="position:absolute;inset:0;background:rgba(2,6,23,0.6);backdrop-filter:blur(4px)"></div>
+        <form id="contactForm" class="card" style="width:min(680px,95%);position:relative;z-index:2;"
+            action="https://formspree.io/f/your_form_id" method="POST">
+            <button type="button" id="closeContact" aria-label="Close contact form"
+                style="position:absolute;right:12px;top:12px;background:transparent;border:0;font-size:18px;cursor:pointer">✕</button>
+            <h3 style="font-weight:800">Send a message</h3>
+            <label class="sr-only">Your name
+                <input name="name" required class="mt-2 w-full p-3" placeholder="Your name" />
+            </label>
+            <label class="sr-only">Your email
+                <input name="email" type="email" required class="mt-2 w-full p-3" placeholder="your@company.com" />
+            </label>
+            <label class="sr-only">Message
+                <textarea name="message" required class="mt-2 w-full p-3" rows="5"
+                    placeholder="Tell me about the role or project"></textarea>
+            </label>
+            <div style="display:flex;gap:8px;margin-top:10px;justify-content:flex-end">
+                <button class="btn btn-primary" type="submit">Send</button>
+                <button type="button" id="cancelContact" class="btn btn-ghost">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Inline JS (self-contained) -->
+    <script>
+        /* =========================
+           Utility & UI helpers
+           ========================= */
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // nav transform & back-to-top
+        (function () {
+            const nav = document.getElementById('navBar');
+            const back = document.getElementById('backToTop');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 28) nav.classList.add('scrolled'); else nav.classList.remove('scrolled');
+                if (window.scrollY > 420) back.classList.add('show'); else back.classList.remove('show');
+            });
+            back.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        })();
+
+        // reveal on scroll (IntersectionObserver)
+        (function () {
+            const obs = new IntersectionObserver((entries, o) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                        // if competencies is intersecting, trigger rings
+                        if (entry.target.id === 'competencies' || (entry.target.closest && entry.target.closest('#competencies'))) {
+                            window.dispatchEvent(new Event('initCompetencies'));
+                        }
+                        o.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.16 });
+
+            document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => obs.observe(el));
+        })();
+
+        // experience counter (accessible but subtle)
+        (function () {
+            const el = document.getElementById('yearsCounter');
+            const target = 2.5;
+            let current = 0;
+            const steps = 42;
+            const inc = target / steps;
+            const delay = 14;
+            function tick() {
+                current += inc;
+                el.textContent = (Math.round(current * 10) / 10).toFixed(1) + '+';
+                if (current < target) setTimeout(tick, delay);
+                else el.textContent = target.toFixed(1) + '+';
+            }
+            window.addEventListener('load', () => setTimeout(tick, 520));
+        })();
+
+        /* =========================
+           Competencies: animate SVG rings
+           ========================= */
+        (function () {
+            const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            function animateSVGCircle(el, percent = 80, duration = 900) {
+                if (prefersReduced) {
+                    // immediate set
+                    const valueEl = el.querySelector('.svg-value');
+                    valueEl.textContent = percent + '%';
+                    const circle = el.querySelector('.progress');
+                    const circumference = 2 * Math.PI * 50;
+                    circle.style.strokeDasharray = circumference;
+                    circle.style.strokeDashoffset = Math.round(circumference * (1 - percent / 100));
+                    return;
+                }
+
+                const svgCircle = el.querySelector('.progress');
+                const valueEl = el.querySelector('.svg-value');
+                const circumference = 2 * Math.PI * 50; // r = 50
+                const targetOffset = Math.round(circumference * (1 - percent / 100));
+                const frames = Math.max(20, Math.round(duration / 16));
+                let step = 0;
+                const inc = percent / frames;
+                svgCircle.style.strokeDasharray = circumference;
+                svgCircle.style.strokeDashoffset = circumference;
+
+                const timer = setInterval(() => {
+                    step++;
+                    const progress = Math.min(percent, Math.round(inc * step));
+                    const offset = Math.round(circumference * (1 - progress / 100));
+                    svgCircle.style.strokeDashoffset = offset;
+                    valueEl.textContent = progress + '%';
+                    if (step >= frames) { clearInterval(timer); valueEl.textContent = percent + '%'; }
+                }, Math.max(8, Math.round(duration / frames)));
+            }
+
+            function initCompetencies() {
+                const circles = document.querySelectorAll('#competencies .svg-circle');
+                circles.forEach((c, i) => {
+                    const pct = Number(c.getAttribute('data-percent') || '0');
+                    setTimeout(() => animateSVGCircle(c, pct, 900), i * 120 + Math.random() * 220);
+                });
+            }
+
+            window.addEventListener('initCompetencies', initCompetencies);
+            // fallback if section already in view
+            setTimeout(() => {
+                const comp = document.getElementById('competencies');
+                if (comp && comp.classList.contains('in-view')) window.dispatchEvent(new Event('initCompetencies'));
+            }, 800);
+        })();
+
+        /* =========================
+           Parallax background & drifting particles
+           - enhanced: respect prefers-reduced-motion & cap particles
+           ========================= */
+        (function () {
+            const bg = document.getElementById('bgGradient');
+            const pc = document.getElementById('particlesCanvas');
+            const ctx = pc.getContext && pc.getContext('2d');
+            const DPR = Math.min(window.devicePixelRatio || 1, 2);
+            const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            // resize canvas
+            function resizeCanvas() {
+                if (!ctx) return;
+                pc.width = Math.floor(window.innerWidth * DPR);
+                pc.height = Math.floor(window.innerHeight * DPR);
+                pc.style.width = window.innerWidth + 'px';
+                pc.style.height = window.innerHeight + 'px';
+                ctx.setTransform(1, 0, 0, 1, 0, 0);
+                ctx.scale(DPR, DPR);
+            }
+            window.addEventListener('resize', () => { resizeCanvas(); initParticles(); });
+
+            // Particle system
+            let particles = [];
+            const colors = ['#06b6d4', '#22d3ee', '#a78bfa']; // cyan, lighter cyan, faint purple
+
+            function initParticles() {
+                if (!ctx) return;
+                resizeCanvas();
+                particles = [];
+                if (prefersReduced) return; // disable particles if user prefers reduced motion
+
+                const area = window.innerWidth * window.innerHeight;
+                // density function with caps to avoid heavy CPU on very large screens
+                let count = Math.round(area / 90000);
+                const maxCount = Math.max(20, Math.min(80, Math.round(area / 60000)));
+                count = Math.max(12, Math.min(maxCount, count));
+                for (let i = 0; i < count; i++) {
+                    particles.push({
+                        x: Math.random() * window.innerWidth,
+                        y: Math.random() * window.innerHeight,
+                        r: 0.8 + Math.random() * 2.1,
+                        vx: (Math.random() * 1.4 - 0.7) * (0.2 + Math.random() * 0.8),
+                        vy: (Math.random() * 0.8 - 0.4) * 0.3,
+                        color: colors[Math.floor(Math.random() * colors.length)],
+                        alpha: 0.25 + Math.random() * 0.6,
+                        drift: 0.2 + Math.random() * 0.8
+                    });
+                }
+            }
+
+            // animate particles
+            let last = performance.now();
+            let pxOffset = 0; // slowly moves horizontally for extra depth
+            let rafId = 0;
+            function frame(now) {
+                const dt = Math.min(60, now - last);
+                last = now;
+                if (ctx) {
+                    ctx.clearRect(0, 0, pc.width, pc.height);
+                    pxOffset += 0.02 * (dt / 16);
+
+                    particles.forEach(p => {
+                        p.x += p.vx * (dt / 16) * p.drift;
+                        p.y += p.vy * (dt / 16) * p.drift;
+
+                        if (p.x < -20) p.x = window.innerWidth + 20;
+                        if (p.x > window.innerWidth + 20) p.x = -20;
+                        if (p.y < -20) p.y = window.innerHeight + 20;
+                        if (p.y > window.innerHeight + 20) p.y = -20;
+
+                        ctx.beginPath();
+                        const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 8);
+                        gradient.addColorStop(0, hexToRGBA(p.color, p.alpha));
+                        gradient.addColorStop(0.4, hexToRGBA(p.color, p.alpha * 0.28));
+                        gradient.addColorStop(1, hexToRGBA('#ffffff', 0));
+                        ctx.fillStyle = gradient;
+                        ctx.arc(p.x + Math.sin(pxOffset * 0.5 + p.x * 0.002) * 2, p.y + Math.cos(pxOffset * 0.4 + p.y * 0.001) * 1.6, p.r * 6, 0, Math.PI * 2);
+                        ctx.fill();
+                    });
+                }
+                rafId = requestAnimationFrame(frame);
+            }
+
+            function hexToRGBA(hex, alpha = 1) {
+                const h = hex.replace('#', '');
+                const bigint = parseInt(h, 16);
+                const r = (bigint >> 16) & 255;
+                const g = (bigint >> 8) & 255;
+                const b = bigint & 255;
+                return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+            }
+
+            // parallax: shift background position with scroll
+            function onScrollParallax() {
+                const s = window.scrollY;
+                const x = Math.min(80, s * 0.08);
+                bg.style.backgroundPosition = `${x}% 50%`;
+                if (pc) pc.style.transform = `translate3d(${s * -0.02}px, ${s * -0.01}px, 0)`;
+                const sections = document.querySelectorAll('section');
+                sections.forEach((sec, i) => {
+                    const speed = 0.02 + (i % 3) * 0.01;
+                    const rect = sec.getBoundingClientRect();
+                    if (rect.top < window.innerHeight * 1.2 && rect.bottom > -window.innerHeight * 0.2) {
+                        const translate = (window.scrollY * speed) * -1;
+                        sec.style.transform = `translate3d(0, ${translate}px, 0)`;
+                    } else {
+                        sec.style.transform = '';
+                    }
+                });
+            }
+
+            // init
+            initParticles();
+            if (!prefersReduced) {
+                requestAnimationFrame(frame);
+            } else {
+                // hide canvas if reduced-motion
+                if (pc) pc.style.display = 'none';
+            }
+            window.addEventListener('scroll', onScrollParallax, { passive: true });
+            window.addEventListener('resize', () => { initParticles(); });
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) cancelAnimationFrame(rafId);
+                else rafId = requestAnimationFrame(frame);
+            });
+        })();
+
+        /* =========================
+           Accessibility: keyboard focus detection
+           ========================= */
+        (function () {
+            function onFirstTab(e) {
+                if (e.key === 'Tab') {
+                    document.documentElement.classList.add('user-is-tabbing');
+                    window.removeEventListener('keydown', onFirstTab);
+                }
+            }
+            window.addEventListener('keydown', onFirstTab);
+        })();
+
+        /* =========================
+           Mobile nav behavior
+           ========================= */
+        (function () {
+            const toggle = document.getElementById('navToggle');
+            const mobile = document.getElementById('mobileNav');
+            const close = document.getElementById('mobileClose');
+
+            function openNav() {
+                toggle.setAttribute('aria-expanded', 'true');
+                mobile.classList.remove('hidden');
+                mobile.setAttribute('aria-hidden', 'false');
+                mobile.style.display = 'block';
+                mobile.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 240, easing: 'ease-out', fill: 'forwards' });
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeNav() {
+                toggle.setAttribute('aria-expanded', 'false');
+                const anim = mobile.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 200, easing: 'ease-in', fill: 'forwards' });
+                anim.onfinish = () => {
+                    mobile.classList.add('hidden');
+                    mobile.setAttribute('aria-hidden', 'true');
+                    mobile.style.display = '';
+                };
+                document.body.style.overflow = '';
+            }
+
+            toggle.addEventListener('click', openNav);
+            close.addEventListener('click', closeNav);
+            mobile.addEventListener('click', (e) => { if (e.target === mobile) closeNav(); });
+            window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeNav(); });
+        })();
+
+        /* =========================
+           Theme toggle (light/dark)
+           ========================= */
+        (function () {
+            const btn = document.getElementById('themeToggle');
+            const root = document.documentElement;
+            const KEY = 'prefs-theme';
+            function applyTheme(t) {
+                if (t === 'light') {
+                    root.classList.add('light');
+                    root.classList.remove('dark');
+                    btn.textContent = '🌞';
+                    btn.setAttribute('aria-pressed', 'true');
+                } else {
+                    root.classList.remove('light');
+                    root.classList.add('dark');
+                    btn.textContent = '🌙';
+                    btn.setAttribute('aria-pressed', 'false');
+                }
+            }
+            const saved = localStorage.getItem(KEY);
+            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const initial = saved || (prefersDark ? 'dark' : 'light');
+            applyTheme(initial);
+
+            btn.addEventListener('click', () => {
+                const newTheme = root.classList.contains('dark') ? 'light' : 'dark';
+                applyTheme(newTheme);
+                localStorage.setItem(KEY, newTheme);
+            });
+        })();
+
+        /* =========================
+           Contact modal (basic)
+           ========================= */
+        (function () {
+            const modal = document.getElementById('contactModal');
+            const openBtns = document.querySelectorAll('#openContact, a[href="#connect"], .btn-contact');
+            const close = document.getElementById('closeContact');
+            const cancel = document.getElementById('cancelContact');
+
+            function show() { modal.classList.remove('hidden'); modal.style.display = 'flex'; modal.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden'; }
+            function hide() { modal.classList.add('hidden'); modal.style.display = ''; modal.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; }
+
+            openBtns.forEach(b => b && b.addEventListener('click', (e) => { e.preventDefault(); show(); }));
+            [close, cancel].forEach(b => b && b.addEventListener('click', hide));
+            window.addEventListener('keydown', (e) => { if (e.key === 'Escape') hide(); });
+        })();
+
+        /* =========================
+           Small improvements & fallbacks
+           ========================= */
+
+        // Ensure competency rings start if section already visible (double-guard)
+        setTimeout(() => {
+            const comp = document.getElementById('competencies');
+            if (comp && (comp.getBoundingClientRect().top < window.innerHeight)) {
+                comp.classList.add('in-view');
+                window.dispatchEvent(new Event('initCompetencies'));
+            }
+        }, 600);
+
+        // simple focus management for keyboard users (skip to content idea)
+        (function () {
+            // add skip link if desired (not shown by default)
+            // ensure focus outlines exist (CSS handles it)
+        })();
+
+        // add rel="noopener noreferrer" to any external target=_blank anchors created dynamically later (defensive)
+        (function enforceRel() {
+            document.querySelectorAll('a[target="_blank"]').forEach(a => {
+                if (!a.rel.includes('noopener')) a.rel = (a.rel + ' noopener noreferrer').trim();
+            });
+        })();
+
+    </script>
+</body>
+
+</html>

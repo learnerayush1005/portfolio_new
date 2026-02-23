@@ -1,0 +1,1229 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Ayush Kumar | Data Engineer</title>
+    <meta name="description"
+        content="Portfolio of Ayush Kumar, a Data Engineer specializing in Snowflake, PySpark, and Cloud Architectures.">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        navy: { 900: '#020617', 800: '#0f172a' },
+                        cyan: { 400: '#22d3ee', 500: '#06b6d4' },
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --accent: #22d3ee;
+        }
+
+        body {
+            background-color: #020617;
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+
+        /* PARALLAX & BG */
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            z-index: -20;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+        }
+
+        .spotlight {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 80vw;
+            height: 80vw;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.15), transparent 70%);
+            transform: translate(-50%, -50%);
+            z-index: -19;
+            pointer-events: none;
+            animation: pulseGlow 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            0% {
+                opacity: 0.5;
+                transform: translate(-50%, -50%) scale(0.8);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+        }
+
+        .code-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            color: rgba(34, 211, 238, 0.04);
+            pointer-events: none;
+            user-select: none;
+            overflow: hidden;
+            white-space: pre;
+            transform: rotate(-3deg) scale(1.05);
+        }
+
+        /* UI */
+        .nav-pill {
+            background: rgba(2, 6, 23, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .nav-pill.scrolled {
+            padding: 0.5rem 1.5rem;
+            border-color: var(--accent);
+        }
+
+        /* Scroll Spy Active State */
+        .nav-link {
+            white-space: nowrap;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link.active {
+            color: #22d3ee;
+            font-weight: 600;
+            text-shadow: 0 0 10px rgba(34, 211, 238, 0.4);
+        }
+
+        .glass-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            transition: transform 0.1s;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(34, 211, 238, 0.3);
+            box-shadow: 0 0 30px rgba(34, 211, 238, 0.1);
+        }
+
+        /* Animations */
+        .typewriter::after {
+            content: '|';
+            animation: blink 1s step-start infinite;
+            color: var(--accent);
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stagger-delay-1 {
+            transition-delay: 100ms;
+        }
+
+        .stagger-delay-2 {
+            transition-delay: 200ms;
+        }
+
+        .stagger-delay-3 {
+            transition-delay: 300ms;
+        }
+
+        .skill-circle circle {
+            transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Graph */
+        .activity-wrapper {
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: #94a3b8;
+        }
+
+        .day-labels {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 87px;
+            padding-bottom: 6px;
+            margin-bottom: 4px;
+        }
+
+        .graph-scroll-mask {
+            flex: 1;
+            overflow-x: auto;
+            position: relative;
+            z-index: 1;
+            padding-top: 35px;
+            padding-bottom: 10px;
+        }
+
+        .graph-grid {
+            display: flex;
+            gap: 3px;
+        }
+
+        .week-column {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            position: relative;
+        }
+
+        .month-label {
+            position: absolute;
+            top: -20px;
+            left: 0;
+            white-space: nowrap;
+            font-weight: 600;
+            color: #cbd5e1;
+        }
+
+        .day-cell {
+            width: 11px;
+            height: 11px;
+            border-radius: 2px;
+            background-color: rgba(30, 41, 59, 0.5);
+            position: relative;
+            transition: border 0.1s;
+        }
+
+        .day-cell:hover {
+            border: 1px solid #ffffff;
+            z-index: 110;
+        }
+
+        .day-cell::before {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 150%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #020617;
+            color: #22d3ee;
+            border: 1px solid rgba(34, 211, 238, 0.3);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.1s;
+            z-index: 120;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+        }
+
+        .day-cell:hover::before {
+            opacity: 1;
+        }
+
+        .l-0 {
+            background: rgba(30, 41, 59, 0.5);
+        }
+
+        .l-1 {
+            background: rgba(6, 182, 212, 0.2);
+        }
+
+        .l-2 {
+            background: rgba(6, 182, 212, 0.5);
+        }
+
+        .l-3 {
+            background: rgba(34, 211, 238, 0.8);
+        }
+
+        .l-4 {
+            background: #ffffff;
+            box-shadow: 0 0 4px rgba(255, 255, 255, 0.7);
+        }
+
+        /* Pipeline */
+        .pipeline-line {
+            position: relative;
+            background: rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+
+        .pipeline-packet {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            transform: translateY(-50%);
+            animation: dataFlow 2s linear infinite;
+        }
+
+        @keyframes dataFlow {
+            0% {
+                left: -20%;
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 1;
+            }
+
+            80% {
+                opacity: 1;
+            }
+
+            100% {
+                left: 100%;
+                opacity: 0;
+            }
+        }
+
+        /* Footer & Animation */
+        .status-dot {
+            height: 8px;
+            width: 8px;
+            background-color: #22c55e;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+            animation: pulse-green 2s infinite;
+        }
+
+        @keyframes pulse-green {
+            0% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+            }
+
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 4px rgba(34, 197, 94, 0);
+            }
+
+            100% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+            }
+        }
+
+        /* Github Button Animation */
+        #github-btn.active {
+            background-color: rgba(34, 211, 238, 0.1);
+            border-color: #22d3ee;
+            color: #22d3ee;
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(34, 211, 238, 0.3);
+        }
+
+        #github-btn .arrow {
+            opacity: 0;
+            transform: translateX(-5px);
+            transition: all 0.3s ease;
+        }
+
+        #github-btn.active .arrow {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Terminal */
+        #terminalModal.open {
+            display: flex;
+            animation: fadeIn 0.2s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #020617;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
+        }
+    </style>
+</head>
+
+<body class="antialiased selection:bg-cyan-500 selection:text-white">
+
+    <div class="bg-grid"></div>
+    <div class="spotlight"></div><canvas id="particles"
+        class="fixed inset-0 z-[-15] opacity-40 pointer-events-none"></canvas>
+
+    <header class="fixed top-6 left-0 right-0 z-50 flex justify-center px-4">
+        <nav id="navbar" class="nav-pill rounded-full px-6 py-3 flex items-center gap-8">
+            <a href="#"
+                class="font-bold text-xl tracking-tight text-white hover:text-cyan-400 transition-colors">AK<span
+                    class="text-cyan-400">.</span></a>
+
+            <div class="hidden md:block w-[300px] overflow-hidden relative">
+                <div id="nav-track"
+                    class="flex items-center gap-6 text-sm font-medium text-slate-400 transition-transform duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)] will-change-transform">
+                    <a href="#about" class="nav-link hover:text-white">About</a>
+                    <a href="#stack" class="nav-link hover:text-white">Stack</a>
+                    <a href="#activity" class="nav-link hover:text-white">Activity</a>
+                    <a href="#projects" class="nav-link hover:text-white">Work</a>
+                    <a href="#timeline" class="nav-link hover:text-white">Career</a>
+                    <a href="#education" class="nav-link hover:text-white">Background</a>
+                </div>
+            </div>
+
+            <a href="mailto:learner.ayush10@gmail.com"
+                class="hidden md:block px-4 py-1.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 text-xs font-bold uppercase tracking-wider hover:bg-cyan-500 hover:text-white transition-all">Hire
+                Me</a>
+        </nav>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-6 pt-32 pb-32">
+
+        <section id="about"
+            class="min-h-[85vh] flex flex-col md:flex-row items-center justify-between gap-12 relative section-spy">
+            <div class="code-bg">import pyspark.sql.functions as F
+                from snowflake.connector import connect
+
+                def data_pipeline(source, target):
+                """
+                Ingest and transform high-volume data
+                """
+                df = spark.read.format("parquet").load(source)
+                # Write to Snowflake
+                df.write.format("snowflake").save(target)
+
+                if __name__ == "__main__":
+                pipeline("s3://raw", "dw.analytics")</div>
+
+            <div class="flex-1 space-y-6 reveal">
+                <div class="flex flex-wrap items-center gap-3">
+                    <div
+                        class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-900/30 border border-cyan-500/30 text-cyan-400 text-xs font-mono">
+                        <span class="relative flex h-2 w-2">
+                            <span
+                                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+                        </span>
+                        Open to Work
+                    </div>
+                    <div
+                        class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-900/30 border border-blue-500/30 text-blue-400 text-xs font-mono">
+                        <span class="text-base">⚡</span>
+                        <span id="exp-counter">Calculating...</span>
+                    </div>
+                </div>
+
+                <h1 class="text-5xl md:text-7xl font-extrabold text-white tracking-tight leading-tight">Ayush <span
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-600">Kumar</span>
+                </h1>
+                <div class="text-xl md:text-2xl text-slate-400 font-light h-8">I build <span id="typewriter"
+                        class="text-white font-mono typewriter"></span></div>
+                <p class="text-slate-400 max-w-lg leading-relaxed">Specialized in high-volume ETL, Cloud Data
+                    Warehousing, and resilient orchestration. Transforming raw chaos into query-ready insights using
+                    <span class="text-cyan-400 font-mono">Snowflake</span> & <span
+                        class="text-cyan-400 font-mono">PySpark</span>.
+                </p>
+                <div class="flex flex-wrap gap-4 pt-4">
+                    <a href="#projects"
+                        class="px-6 py-3 bg-white text-slate-900 rounded-lg font-bold hover:bg-cyan-50 hover:scale-105 transition-transform">View
+                        Projects</a>
+                    <a href="My Resume (1).pdf" download
+                        class="px-6 py-3 rounded-lg border border-slate-700 text-slate-300 hover:border-cyan-500 hover:text-cyan-400 transition-colors flex items-center gap-2"><span>Download
+                            CV</span><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                        </svg></a>
+                </div>
+            </div>
+
+            <div class="flex-1 relative w-full max-w-md reveal stagger-delay-2 hidden md:block">
+                <div class="grid grid-cols-2 gap-4" id="tilt-grid">
+                    <div class="glass-card p-6 rounded-2xl tilt-card">
+                        <div
+                            class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center mb-4 text-blue-400 font-bold">
+                            SF</div>
+                        <h3 class="font-bold text-white mb-1">Snowflake</h3>
+                        <p class="text-xs text-slate-400">Warehousing</p>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl tilt-card mt-8">
+                        <div
+                            class="w-10 h-10 bg-yellow-500/20 rounded-lg flex items-center justify-center mb-4 text-yellow-400 font-bold">
+                            Py</div>
+                        <h3 class="font-bold text-white mb-1">PySpark</h3>
+                        <p class="text-xs text-slate-400">Processing</p>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl tilt-card -mt-8">
+                        <div
+                            class="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center mb-4 text-purple-400 font-bold">
+                            Q</div>
+                        <h3 class="font-bold text-white mb-1">Qlik CDC</h3>
+                        <p class="text-xs text-slate-400">Ingestion</p>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl tilt-card">
+                        <div
+                            class="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center mb-4 text-green-400 font-bold">
+                            Ctl</div>
+                        <h3 class="font-bold text-white mb-1">Control-M</h3>
+                        <p class="text-xs text-slate-400">Orchestration</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="stack" class="py-24 relative section-spy">
+            <div class="code-bg" style="top: -50px; opacity: 0.03; font-size: 16px;">SELECT skill_name, proficiency FROM
+                skills WHERE category = 'ETL';</div>
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl font-bold text-white mb-4">Technical <span class="text-cyan-400">Arsenal</span></h2>
+                <p class="text-slate-400 max-w-2xl mx-auto">My toolbox for solving complex data problems.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 reveal stagger-delay-1">
+                <div
+                    class="glass-card p-5 rounded-xl flex items-center gap-4 hover:-translate-y-1 transition-transform duration-300">
+                    <div class="relative w-16 h-16 skill-circle" data-percent="92"><svg
+                            class="w-full h-full transform -rotate-90">
+                            <circle cx="32" cy="32" r="28" stroke="rgba(255,255,255,0.1)" stroke-width="6" fill="none">
+                            </circle>
+                            <circle cx="32" cy="32" r="28" stroke="#06b6d4" stroke-width="6" fill="none"
+                                stroke-dasharray="175" stroke-dashoffset="175" class="progress"></circle>
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center font-bold text-sm text-white">92%
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-lg">Data Warehousing</h4>
+                        <p class="text-xs text-slate-400 mt-1">Snowflake, Star Schema</p>
+                    </div>
+                </div>
+                <div
+                    class="glass-card p-5 rounded-xl flex items-center gap-4 hover:-translate-y-1 transition-transform duration-300">
+                    <div class="relative w-16 h-16 skill-circle" data-percent="86"><svg
+                            class="w-full h-full transform -rotate-90">
+                            <circle cx="32" cy="32" r="28" stroke="rgba(255,255,255,0.1)" stroke-width="6" fill="none">
+                            </circle>
+                            <circle cx="32" cy="32" r="28" stroke="#22d3ee" stroke-width="6" fill="none"
+                                stroke-dasharray="175" stroke-dashoffset="175" class="progress"></circle>
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center font-bold text-sm text-white">86%
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-lg">ETL & Orchestration</h4>
+                        <p class="text-xs text-slate-400 mt-1">Qlik CDC, Control-M</p>
+                    </div>
+                </div>
+                <div
+                    class="glass-card p-5 rounded-xl flex items-center gap-4 hover:-translate-y-1 transition-transform duration-300">
+                    <div class="relative w-16 h-16 skill-circle" data-percent="82"><svg
+                            class="w-full h-full transform -rotate-90">
+                            <circle cx="32" cy="32" r="28" stroke="rgba(255,255,255,0.1)" stroke-width="6" fill="none">
+                            </circle>
+                            <circle cx="32" cy="32" r="28" stroke="#818cf8" stroke-width="6" fill="none"
+                                stroke-dasharray="175" stroke-dashoffset="175" class="progress"></circle>
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center font-bold text-sm text-white">82%
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-lg">Programming</h4>
+                        <p class="text-xs text-slate-400 mt-1">Python, PySpark, SQL</p>
+                    </div>
+                </div>
+                <div
+                    class="glass-card p-5 rounded-xl flex items-center gap-4 hover:-translate-y-1 transition-transform duration-300">
+                    <div class="relative w-16 h-16 skill-circle" data-percent="78"><svg
+                            class="w-full h-full transform -rotate-90">
+                            <circle cx="32" cy="32" r="28" stroke="rgba(255,255,255,0.1)" stroke-width="6" fill="none">
+                            </circle>
+                            <circle cx="32" cy="32" r="28" stroke="#34d399" stroke-width="6" fill="none"
+                                stroke-dasharray="175" stroke-dashoffset="175" class="progress"></circle>
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center font-bold text-sm text-white">78%
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-lg">Cloud Platform</h4>
+                        <p class="text-xs text-slate-400 mt-1">Azure, Cloud Patterns</p>
+                    </div>
+                </div>
+                <div
+                    class="glass-card p-5 rounded-xl flex items-center gap-4 hover:-translate-y-1 transition-transform duration-300">
+                    <div class="relative w-16 h-16 skill-circle" data-percent="89"><svg
+                            class="w-full h-full transform -rotate-90">
+                            <circle cx="32" cy="32" r="28" stroke="rgba(255,255,255,0.1)" stroke-width="6" fill="none">
+                            </circle>
+                            <circle cx="32" cy="32" r="28" stroke="#f472b6" stroke-width="6" fill="none"
+                                stroke-dasharray="175" stroke-dashoffset="175" class="progress"></circle>
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center font-bold text-sm text-white">89%
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-lg">Databases</h4>
+                        <p class="text-xs text-slate-400 mt-1">Snowflake, DB2, SQL</p>
+                    </div>
+                </div>
+                <div
+                    class="glass-card p-5 rounded-xl flex items-center gap-4 hover:-translate-y-1 transition-transform duration-300">
+                    <div class="relative w-16 h-16 skill-circle" data-percent="80"><svg
+                            class="w-full h-full transform -rotate-90">
+                            <circle cx="32" cy="32" r="28" stroke="rgba(255,255,255,0.1)" stroke-width="6" fill="none">
+                            </circle>
+                            <circle cx="32" cy="32" r="28" stroke="#fbbf24" stroke-width="6" fill="none"
+                                stroke-dasharray="175" stroke-dashoffset="175" class="progress"></circle>
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center font-bold text-sm text-white">80%
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-lg">Data Quality</h4>
+                        <p class="text-xs text-slate-400 mt-1">Pipelines & Governance</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="activity" class="py-12 section-spy">
+            <div class="reveal max-w-5xl mx-auto px-4">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-2xl font-bold text-white">Coding <span class="text-cyan-400">Activity</span></h3>
+                    <div class="flex items-center gap-2 text-xs text-slate-400">
+                        <span>Less</span>
+                        <div class="w-3 h-3 rounded-sm bg-[#1e293b]"></div>
+                        <div class="w-3 h-3 rounded-sm bg-[#06b6d4]/30"></div>
+                        <div class="w-3 h-3 rounded-sm bg-[#06b6d4]/60"></div>
+                        <div class="w-3 h-3 rounded-sm bg-[#22d3ee]"></div><span>More</span>
+                    </div>
+                </div>
+                <div class="glass-card p-6 rounded-xl">
+                    <div class="activity-wrapper">
+                        <div class="day-labels"><span>Mon</span><span>Wed</span><span>Fri</span></div>
+                        <div class="graph-scroll-mask">
+                            <div class="graph-grid" id="graphGrid"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="workflow" class="py-24 relative">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl font-bold text-white mb-4">The Engineering <span
+                        class="text-cyan-400">Workflow</span></h2>
+                <p class="text-slate-400 max-w-2xl mx-auto">Visualizing how I move, transform, and store data at scale.
+                </p>
+            </div>
+            <div class="hidden md:flex justify-between items-center relative max-w-5xl mx-auto px-4 reveal">
+                <div class="absolute top-1/2 left-[10%] right-[66%] h-[2px] pipeline-line z-0">
+                    <div class="pipeline-packet"></div>
+                </div>
+                <div class="absolute top-1/2 left-[33%] right-[33%] h-[2px] pipeline-line z-0">
+                    <div class="pipeline-packet" style="animation-delay: 0.5s"></div>
+                </div>
+                <div class="absolute top-1/2 left-[66%] right-[10%] h-[2px] pipeline-line z-0">
+                    <div class="pipeline-packet" style="animation-delay: 1s"></div>
+                </div>
+                <div
+                    class="glass-card p-6 rounded-2xl relative z-10 w-48 text-center border-t border-slate-700 hover:border-cyan-400 transition-all group">
+                    <div
+                        class="w-12 h-12 mx-auto bg-slate-800 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                        <svg class="w-6 h-6 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 7v10c0 2.21 3.58 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.58 4 8 4s8-1.79 8-4M4 7c0-2.21 3.58-4 8-4s8 1.79 8 4m0 5c0 2.21-3.58 4-8 4s-8-1.79-8-4" />
+                        </svg>
+                    </div>
+                    <h4 class="font-bold text-white">Source</h4>
+                    <p class="text-xs text-slate-400 mt-2">DB2 / Raw Files</p>
+                </div>
+                <div
+                    class="glass-card p-6 rounded-2xl relative z-10 w-48 text-center border-t border-purple-500/50 hover:border-purple-400 transition-all group">
+                    <div
+                        class="w-12 h-12 mx-auto bg-purple-900/30 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                        <svg class="w-6 h-6 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                        </svg>
+                    </div>
+                    <h4 class="font-bold text-white">Ingestion</h4>
+                    <p class="text-xs text-slate-400 mt-2">Qlik CDC</p>
+                </div>
+                <div
+                    class="glass-card p-6 rounded-2xl relative z-10 w-48 text-center border-t border-yellow-500/50 hover:border-yellow-400 transition-all group">
+                    <div
+                        class="w-12 h-12 mx-auto bg-yellow-900/30 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                        <svg class="w-6 h-6 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                    </div>
+                    <h4 class="font-bold text-white">Transform</h4>
+                    <p class="text-xs text-slate-400 mt-2">PySpark / Python</p>
+                </div>
+                <div
+                    class="glass-card p-6 rounded-2xl relative z-10 w-48 text-center border-t border-blue-500/50 hover:border-blue-400 transition-all group">
+                    <div
+                        class="w-12 h-12 mx-auto bg-blue-900/30 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                        <svg class="w-6 h-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                        </svg>
+                    </div>
+                    <h4 class="font-bold text-white">Warehouse</h4>
+                    <p class="text-xs text-slate-400 mt-2">Snowflake</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="py-24 section-spy">
+            <h2 class="text-3xl font-bold text-white mb-12 text-center reveal">Featured <span
+                    class="text-cyan-400">Deployments</span></h2>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <article class="glass-card rounded-2xl overflow-hidden group reveal">
+                    <div class="h-2 bg-gradient-to-r from-green-500 to-emerald-400"></div>
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-xl font-bold text-white group-hover:text-green-400 transition-colors">
+                                ShiftX-1B</h3><span
+                                class="text-xs font-mono bg-green-900/30 text-green-400 border border-green-500/30 px-2 py-1 rounded">Ongoing</span>
+                        </div>
+                        <p class="text-slate-400 text-sm mb-6 leading-relaxed">Large-scale migration focusing on data
+                            integrity and minimal downtime. Designing resiliency strategies for critical pipelines.</p>
+                        <div class="flex flex-wrap gap-2 mt-auto"><span
+                                class="px-3 py-1 text-xs font-mono border border-slate-700 rounded-full text-green-300">Migration</span><span
+                                class="px-3 py-1 text-xs font-mono border border-slate-700 rounded-full text-green-300">Architecture</span>
+                        </div>
+                    </div>
+                </article>
+                <article class="glass-card rounded-2xl overflow-hidden group reveal stagger-delay-1">
+                    <div class="h-2 bg-gradient-to-r from-blue-500 to-cyan-400"></div>
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors">Flood
+                                the Lake</h3><span
+                                class="text-xs font-mono bg-slate-800 text-slate-300 px-2 py-1 rounded">2024-25</span>
+                        </div>
+                        <p class="text-slate-400 text-sm mb-6 leading-relaxed">Consolidated enterprise data into
+                            Snowflake from PL Claims & DB2 using Qlik Replicate. Engineered incremental load patterns.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mt-auto"><span
+                                class="px-3 py-1 text-xs font-mono border border-slate-700 rounded-full text-cyan-300">Snowflake</span><span
+                                class="px-3 py-1 text-xs font-mono border border-slate-700 rounded-full text-cyan-300">Qlik</span>
+                        </div>
+                    </div>
+                </article>
+                <article class="glass-card rounded-2xl overflow-hidden group reveal stagger-delay-2">
+                    <div class="h-2 bg-gradient-to-r from-purple-500 to-pink-500"></div>
+                    <div class="p-8">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-xl font-bold text-white group-hover:text-purple-400 transition-colors">
+                                Liberty Andes</h3><span
+                                class="text-xs font-mono bg-slate-800 text-slate-300 px-2 py-1 rounded">2023</span>
+                        </div>
+                        <p class="text-slate-400 text-sm mb-6 leading-relaxed">Architected multi-country data flows for
+                            Chile, Colombia & Ecuador. Landing → Cleaning → Warehouse pipeline for BI analytics.</p>
+                        <div class="flex flex-wrap gap-2 mt-auto"><span
+                                class="px-3 py-1 text-xs font-mono border border-slate-700 rounded-full text-purple-300">Informatica</span><span
+                                class="px-3 py-1 text-xs font-mono border border-slate-700 rounded-full text-purple-300">Oracle</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section id="feedback" class="py-24">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl font-bold text-white mb-4">Performance <span class="text-cyan-400">Insights</span>
+                </h2>
+                <p class="text-slate-400 max-w-2xl mx-auto">Distilled feedback from Senior Architects and Project
+                    Managers.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 reveal stagger-delay-1">
+                <div
+                    class="glass-card p-6 rounded-xl border border-white/5 bg-gradient-to-br from-white/5 to-transparent relative overflow-hidden">
+                    <h4 class="font-bold text-white text-lg mb-2">Unparalleled Contributor</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed">"Delivered all major FTL artifacts with <span
+                            class="text-cyan-400 font-semibold">zero major defects</span>."</p>
+                </div>
+                <div
+                    class="glass-card p-6 rounded-xl border border-white/5 bg-gradient-to-br from-white/5 to-transparent relative overflow-hidden">
+                    <h4 class="font-bold text-white text-lg mb-2">Technical Adaptability</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed">"Quickly mastered <span
+                            class="text-white font-mono text-xs">Qlik Replication</span> and Snowflake SQL."</p>
+                </div>
+                <div
+                    class="glass-card p-6 rounded-xl border border-white/5 bg-gradient-to-br from-white/5 to-transparent relative overflow-hidden">
+                    <h4 class="font-bold text-white text-lg mb-2">Reliability</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed">"Consistently demonstrated a willingness to
+                        stretch to meet demanding project timelines."</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="timeline" class="py-24 max-w-4xl mx-auto section-spy">
+            <h2 class="text-3xl font-bold text-white mb-16 text-center reveal">Professional <span
+                    class="text-cyan-400">Path</span></h2>
+            <div class="relative border-l border-slate-800 ml-4 md:ml-0 space-y-12">
+                <div class="relative pl-8 md:pl-0 md:flex items-center group reveal">
+                    <div
+                        class="absolute -left-[5px] md:left-1/2 md:-ml-[5px] w-3 h-3 rounded-full bg-cyan-500 shadow-[0_0_10px_rgba(6,182,212,0.6)] z-10">
+                    </div>
+                    <div class="hidden md:block w-1/2 pr-12 text-right"><span
+                            class="font-mono text-cyan-400 text-sm">Jul 2025 - Present</span></div>
+                    <div class="w-full md:w-1/2 md:pl-12">
+                        <div class="glass-card p-6 rounded-xl border-l-4 border-l-cyan-500 relative">
+                            <h3 class="text-lg font-bold text-white">Associate</h3>
+                            <p class="text-sm text-slate-400 mt-2">Developer in ShiftX-1B migration resiliency
+                                initiative.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative pl-8 md:pl-0 md:flex items-center group reveal">
+                    <div
+                        class="absolute -left-[5px] md:left-1/2 md:-ml-[5px] w-3 h-3 rounded-full bg-slate-600 group-hover:bg-cyan-500 transition-colors z-10">
+                    </div>
+                    <div class="hidden md:block w-1/2 pr-12 text-right">
+                        <div
+                            class="glass-card p-6 rounded-xl border-r-4 border-r-slate-600 hover:border-r-cyan-500 transition-colors">
+                            <h3 class="text-lg font-bold text-white">Programmer Analyst</h3>
+                            <p class="text-sm text-slate-400 mt-2">Core Developer in Project FTL (Snowflake
+                                Consolidation). Implemented CDC pipelines.</p>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/2 md:pl-12"><span
+                            class="hidden md:block font-mono text-slate-500 text-sm">Feb 2024 - Jul 2025</span></div>
+                </div>
+                <div class="relative pl-8 md:pl-0 md:flex items-center group reveal">
+                    <div class="absolute -left-[5px] md:left-1/2 md:-ml-[5px] w-3 h-3 rounded-full bg-slate-700 z-10">
+                    </div>
+                    <div class="hidden md:block w-1/2 pr-12 text-right"><span
+                            class="font-mono text-slate-600 text-sm">Feb 2023 - Feb 2024</span></div>
+                    <div class="w-full md:w-1/2 md:pl-12">
+                        <div class="glass-card p-6 rounded-xl border-l-4 border-l-slate-700">
+                            <h3 class="text-lg font-bold text-white">Programmer Analyst Trainee</h3>
+                            <p class="text-sm text-slate-400 mt-2">L1 Support for Project Liberty Andes.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative pl-8 md:pl-0 md:flex items-center group reveal">
+                    <div
+                        class="absolute -left-[5px] md:left-1/2 md:-ml-[5px] w-3 h-3 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.5)] z-10">
+                    </div>
+                    <div class="hidden md:block w-1/2 pr-12 text-right">
+                        <div
+                            class="glass-card p-6 rounded-xl border-r-4 border-r-blue-500 hover:border-r-cyan-400 transition-colors">
+                            <h3 class="text-lg font-bold text-white">Intern (Microsoft Azure)</h3>
+                            <p class="text-sm text-slate-400 mt-2">Completed training & acquired practical experience in
+                                cloud computing.</p>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/2 md:pl-12"><span
+                            class="hidden md:block font-mono text-blue-400 text-sm">Mar 2022 - Jul 2022</span></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="education" class="py-24 section-spy">
+            <h2 class="text-3xl font-bold text-white mb-12 text-center reveal">Academic <span
+                    class="text-cyan-400">Background</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 reveal stagger-delay-1">
+                <div
+                    class="glass-card p-8 rounded-2xl border-t border-t-cyan-500/50 hover:border-cyan-400 transition-colors">
+                    <div class="text-4xl mb-4">🎓</div>
+                    <div class="font-mono text-cyan-400 text-xs mb-2">08/2018 - 06/2022</div>
+                    <h3 class="text-xl font-bold text-white mb-1">Bachelor of Technology, CSE - 8.4 GPA</h3>
+                    <p class="text-slate-300 font-medium">Haldia Institute of Technology</p>
+                    <p class="text-slate-500 text-sm mt-4">Haldia, West Bengal</p>
+                </div>
+                <div
+                    class="glass-card p-8 rounded-2xl border-t border-t-purple-500/50 hover:border-purple-400 transition-colors">
+                    <div class="text-4xl mb-4">🏫</div>
+                    <div class="font-mono text-purple-400 text-xs mb-2">2018 • 87%</div>
+                    <h3 class="text-xl font-bold text-white mb-1">Intermediate (CBSE)</h3>
+                    <p class="text-slate-300 font-medium">Sree Ayyappa Public School</p>
+                    <p class="text-slate-500 text-sm mt-4">Bokaro Steel City</p>
+                </div>
+                <div
+                    class="glass-card p-8 rounded-2xl border-t border-t-pink-500/50 hover:border-pink-400 transition-colors">
+                    <div class="text-4xl mb-4">🎒</div>
+                    <div class="font-mono text-pink-400 text-xs mb-2">2016 • 9.3 CGPA</div>
+                    <h3 class="text-xl font-bold text-white mb-1">Matriculation (CBSE)</h3>
+                    <p class="text-slate-300 font-medium">Chinmaya Vidyalaya</p>
+                    <p class="text-slate-500 text-sm mt-4">Bokaro Steel City</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-12 mb-12">
+            <div class="grid md:grid-cols-2 gap-12 reveal">
+                <div class="glass-card p-8 rounded-2xl">
+                    <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-3"><span
+                            class="text-cyan-400">#</span> Languages</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between text-sm mb-2"><span
+                                    class="text-white font-bold">English</span><span class="text-cyan-400">Professional
+                                    Working</span></div>
+                            <div class="h-2 bg-slate-800 rounded-full overflow-hidden">
+                                <div class="h-full bg-cyan-500 w-[90%]"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-sm mb-2"><span
+                                    class="text-white font-bold">Hindi</span><span class="text-green-400">Native /
+                                    Bilingual</span></div>
+                            <div class="h-2 bg-slate-800 rounded-full overflow-hidden">
+                                <div class="h-full bg-green-500 w-[100%]"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-card p-8 rounded-2xl">
+                    <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-3"><span
+                            class="text-purple-400">#</span> Interests</h3>
+                    <div class="flex flex-wrap gap-3">
+                        <span
+                            class="px-4 py-2 rounded-lg bg-slate-800 text-slate-200 border border-slate-700 hover:border-purple-400 transition-colors">🏏
+                            Playing Cricket</span>
+                        <span
+                            class="px-4 py-2 rounded-lg bg-slate-800 text-slate-200 border border-slate-700 hover:border-purple-400 transition-colors">📰
+                            Following Tech Blogs</span>
+                        <span
+                            class="px-4 py-2 rounded-lg bg-slate-800 text-slate-200 border border-slate-700 hover:border-purple-400 transition-colors">📈
+                            Industry Trends</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="mt-24 text-center border-t border-slate-800 pt-12 pb-20">
+            <h2 class="text-3xl font-bold text-white mb-6">Let's talk <span class="text-cyan-400">Data.</span></h2>
+            <div class="flex justify-center gap-6 mb-12">
+                <a href="mailto:learner.ayush10@gmail.com"
+                    class="text-slate-400 hover:text-white transition-colors">Email</a>
+                <a href="https://linkedin.com/in/ayush-kumar-0b6828173" target="_blank"
+                    class="text-slate-400 hover:text-white transition-colors">LinkedIn</a>
+                <a href="tel:+917763994558" class="text-slate-400 hover:text-white transition-colors">+91 77639
+                    94558</a>
+            </div>
+            <p class="text-slate-600 text-sm">© <span id="year"></span> Ayush Kumar. Built with code, coffee & cloud.
+            </p>
+        </footer>
+
+        <div
+            class="fixed bottom-0 left-0 right-0 bg-[#020617]/95 backdrop-blur-md border-t border-slate-800 h-8 flex items-center justify-between px-4 text-[10px] md:text-xs font-mono text-slate-500 z-50">
+            <a href="https://github.com/yourusername" target="_blank" id="github-btn"
+                class="flex items-center gap-2 px-2 py-1 rounded transition-all duration-300 hover:text-white cursor-pointer group">
+                <svg class="w-3 h-3 arrow group-hover:text-cyan-400" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                </svg>
+                <span class="group-hover:text-cyan-400">main*</span>
+                <svg class="w-3 h-3 arrow opacity-0 -translate-x-2 transition-all group-hover:opacity-100 group-hover:translate-x-0 text-cyan-400"
+                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3">
+                    </path>
+                </svg>
+            </a>
+            <div class="hidden md:flex items-center gap-2"><span
+                    class="w-1.5 h-1.5 rounded-full bg-slate-600"></span><span>Bokaro, IN (UTC+5:30)</span></div>
+            <div class="flex items-center gap-4">
+                <div class="hidden md:block">LATENCY: <span id="latency" class="text-cyan-400">24ms</span></div>
+                <div class="flex items-center gap-2 text-green-400"><span class="status-dot"></span><span>SYSTEM
+                        OPERATIONAL</span></div>
+            </div>
+        </div>
+
+        <button onclick="toggleTerminal()"
+            class="fixed bottom-12 right-6 z-50 w-12 h-12 bg-slate-800 border border-slate-600 rounded-full flex items-center justify-center text-cyan-400 hover:bg-slate-700 hover:scale-110 transition-all shadow-lg group">
+            <svg class="w-6 h-6 group-hover:animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            </svg>
+        </button>
+
+        <div id="terminalModal"
+            class="fixed inset-0 z-[60] hidden flex-col items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+            <div
+                class="w-full max-w-2xl bg-[#0f172a] rounded-lg border border-slate-700 shadow-2xl overflow-hidden font-mono text-sm relative">
+                <div class="bg-slate-800 px-4 py-2 flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <div class="w-3 h-3 rounded-full bg-red-500 cursor-pointer" onclick="toggleTerminal()"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                    </div>
+                    <div class="text-slate-400 text-xs">ayush@portfolio:~</div>
+                </div>
+                <div class="p-4 h-80 overflow-y-auto text-slate-300" id="terminalOutput"
+                    onclick="document.getElementById('terminalInput').focus()">
+                    <div class="mb-2">Welcome to Ayush's Terminal v1.0.0</div>
+                    <div class="mb-2">Type <span class="text-cyan-400">'help'</span> to see available commands.</div>
+                </div>
+                <div class="px-4 pb-4 flex items-center gap-2 text-cyan-400"><span>➜</span><span
+                        class="text-purple-400">~</span><input id="terminalInput" type="text"
+                        class="bg-transparent outline-none flex-1 text-slate-200" autocomplete="off" spellcheck="false">
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // --- 1. OPTIMIZED SCROLL SPY & SLIDING NAV ---
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('.section-spy');
+        const navTrack = document.getElementById('nav-track');
+
+        // Config: When index > 3 (after Work), slide left
+        const slideConfig = {
+            thresholdIndex: 3, // Index of 'Work'
+            slideAmount: 85 // Pixels to slide per item
+        };
+
+        const spyObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    let activeIndex = 0;
+
+                    navLinks.forEach((link, index) => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${id}`) {
+                            link.classList.add('active');
+                            activeIndex = index;
+                        }
+                    });
+
+                    // Sliding Logic
+                    if (window.innerWidth >= 768) { // Only desktop
+                        if (activeIndex > slideConfig.thresholdIndex) {
+                            const shift = (activeIndex - slideConfig.thresholdIndex) * slideConfig.slideAmount;
+                            navTrack.style.transform = `translateX(-${shift}px)`;
+                        } else {
+                            navTrack.style.transform = `translateX(0px)`;
+                        }
+                    }
+                }
+            });
+        }, { threshold: 0.2, rootMargin: "-10% 0px -50% 0px" });
+
+        sections.forEach(sec => spyObserver.observe(sec));
+
+        // Parallax & Footer Trigger
+        let lastScrollY = 0;
+        let ticking = false;
+
+        window.addEventListener('scroll', () => {
+            lastScrollY = window.scrollY;
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    document.getElementById('navbar').classList.toggle('scrolled', lastScrollY > 50);
+                    const footerTrigger = document.body.offsetHeight - window.innerHeight - 100;
+                    if (lastScrollY >= footerTrigger) document.getElementById('github-btn').classList.add('active');
+                    else document.getElementById('github-btn').classList.remove('active');
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }, { passive: true });
+
+        // --- 2. Typewriter ---
+        const roles = ["Data Pipelines", "Cloud Architecture", "Resilient ETL", "Snowflake Schemas"];
+        let roleIndex = 0; let charIndex = 0; let isDeleting = false;
+        const typeTarget = document.getElementById('typewriter');
+        function typeWriter() {
+            const currentRole = roles[roleIndex];
+            typeTarget.textContent = currentRole.substring(0, isDeleting ? charIndex - 1 : charIndex + 1);
+            charIndex += isDeleting ? -1 : 1;
+            let timer = isDeleting ? 50 : 100;
+            if (!isDeleting && charIndex === currentRole.length) { timer = 2000; isDeleting = true; }
+            else if (isDeleting && charIndex === 0) { isDeleting = false; roleIndex = (roleIndex + 1) % roles.length; }
+            setTimeout(typeWriter, timer);
+        }
+        document.addEventListener('DOMContentLoaded', typeWriter);
+
+        // --- 3. Scroll Reveal ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    if (entry.target.querySelector('.skill-circle')) {
+                        entry.target.querySelectorAll('.skill-circle').forEach(circle => {
+                            const percent = circle.getAttribute('data-percent');
+                            circle.querySelector('.progress').style.strokeDashoffset = (2 * Math.PI * 28) * (1 - percent / 100);
+                        });
+                    }
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        document.addEventListener('mousemove', (e) => {
+            document.querySelectorAll('.tilt-card').forEach(card => card.style.transform = `rotateY(${(window.innerWidth / 2 - e.pageX) / 25}deg) rotateX(${(window.innerHeight / 2 - e.pageY) / 25}deg)`);
+        });
+        document.getElementById('year').textContent = new Date().getFullYear();
+        setInterval(() => { document.getElementById('latency').innerText = Math.floor(Math.random() * 30 + 15) + "ms"; }, 2000);
+
+        // --- 4. Experience Counter (Live) ---
+        (function () {
+            const start = new Date('2023-02-21');
+            const now = new Date();
+            let years = now.getFullYear() - start.getFullYear();
+            let months = now.getMonth() - start.getMonth();
+            if (now.getDate() < start.getDate()) months--;
+            if (months < 0) { years--; months += 12; }
+
+            const el = document.getElementById('exp-counter');
+            if (el) el.textContent = `${years} Yrs ${months} Mos`;
+        })();
+
+        /* 5. Particles */
+        const canvas = document.getElementById('particles'), ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        let particles = Array.from({ length: 30 }, () => ({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, size: Math.random() * 2, speedX: Math.random() * 0.5 - 0.25, speedY: Math.random() * 0.5 - 0.25 }));
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.x += p.speedX; p.y += p.speedY;
+                if (p.x > canvas.width) p.x = 0; else if (p.x < 0) p.x = canvas.width;
+                if (p.y > canvas.height) p.y = 0; else if (p.y < 0) p.y = canvas.height;
+                ctx.fillStyle = 'rgba(34, 211, 238, 0.5)'; ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+        window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
+
+        /* 6. Terminal */
+        const termModal = document.getElementById('terminalModal'), termIn = document.getElementById('terminalInput'), termOut = document.getElementById('terminalOutput');
+        const cmds = { 'help': 'Commands: about, skills, projects, contact, clear', 'about': 'Data Engineer. 2.5+ YOE. Snowflake & Azure.', 'skills': 'Python, SQL, Qlik, Control-M, Informatica.', 'projects': 'ShiftX-1B, Flood the Lake.', 'contact': 'learner.ayush10@gmail.com', 'clear': 'CLEAR' };
+        function toggleTerminal() { termModal.classList.toggle('hidden'); termModal.classList.toggle('open'); if (!termModal.classList.contains('hidden')) termIn.focus(); }
+        termIn.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+                const v = this.value.trim().toLowerCase();
+                if (v) {
+                    termOut.innerHTML += `<div><span class="text-cyan-400">➜</span> ~ ${v}</div>`;
+                    if (cmds[v]) { if (v === 'clear') termOut.innerHTML = ''; else termOut.innerHTML += `<div class="mb-2 text-green-400">${cmds[v]}</div>`; }
+                    else termOut.innerHTML += `<div class="mb-2 text-red-400">Not found: ${v}</div>`;
+                }
+                this.value = ''; termOut.scrollTop = termOut.scrollHeight;
+            }
+        });
+        window.addEventListener('keydown', (e) => { if (e.key === 'Escape') termModal.classList.add('hidden'); });
+
+        /* 7. FIXED GRAPH GENERATOR */
+        (function generateGraph() {
+            const grid = document.getElementById('graphGrid');
+            const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+            const today = new Date();
+            const start = new Date(today);
+            start.setDate(today.getDate() - 365);
+            const gridStartDate = new Date(start);
+            gridStartDate.setDate(gridStartDate.getDate() - gridStartDate.getDay());
+
+            let lastMonth = -1;
+
+            for (let i = 0; i < 53; i++) {
+                const weekCol = document.createElement('div');
+                weekCol.className = 'week-column';
+
+                const weekDate = new Date(gridStartDate);
+                weekDate.setDate(weekDate.getDate() + (i * 7));
+                const currentMonth = weekDate.getMonth();
+
+                if (currentMonth !== lastMonth && i < 52) {
+                    const label = document.createElement('span');
+                    label.className = 'month-label';
+                    label.textContent = monthNames[currentMonth];
+                    weekCol.appendChild(label);
+                    lastMonth = currentMonth;
+                }
+
+                for (let j = 0; j < 7; j++) {
+                    const cellDate = new Date(weekDate);
+                    cellDate.setDate(cellDate.getDate() + j);
+                    if (cellDate > today) break;
+
+                    const cell = document.createElement('div');
+                    const level = Math.random() > 0.65 ? Math.floor(Math.random() * 4) + 1 : 0;
+                    cell.className = `day-cell l-${level}`;
+
+                    const count = level === 0 ? "No" : Math.floor(Math.random() * 6) + 1;
+                    const dateStr = cellDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                    cell.setAttribute('data-tooltip', `${count} contribution${count !== 1 ? 's' : ''} on ${dateStr}`);
+
+                    weekCol.appendChild(cell);
+                }
+                grid.appendChild(weekCol);
+            }
+
+            setTimeout(() => {
+                const container = document.querySelector('.graph-scroll-mask');
+                if (container) container.scrollLeft = container.scrollWidth;
+            }, 100);
+        })();
+    </script>
+</body>
+
+</html>
